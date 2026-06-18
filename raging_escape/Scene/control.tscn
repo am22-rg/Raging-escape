@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://db8xts6uww2qg"]
+
+[ext_resource type="Script" uid="uid://ujnksgvjg4ly" path="res://Script/control.gd" id="1_0ve60"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(28.8513, 16.2267)
+script = ExtResource("1_0ve60")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.957813, 0.787205)
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2

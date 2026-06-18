@@ -12,9 +12,42 @@ script = ExtResource("1_0ve60")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(0.957813, 0.787205)
+offset_left = 24.3864
+offset_top = 17.9721
+offset_right = 41.3864
+offset_bottom = 25.9721
+theme_override_constants/separation = 1
 
-[node name="Button" type="Button" parent="HBoxContainer"]
+[node name="Button" type="TextureButton" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Button2" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 16.1681
+offset_top = -0.437138
+offset_right = 24.1681
+offset_bottom = 24.5629
+theme_override_constants/separation = 1
+
+[node name="Button" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Button2" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="neg_button_character"]
+[connection signal="pressed" from="HBoxContainer/Button2" to="." method="pos_button_character"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="neg_button_level"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="pos_button_level"]

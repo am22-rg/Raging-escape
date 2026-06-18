@@ -18,6 +18,7 @@ func Take_damage():
 		pass
 		# TODO Menu - make a you died menu
 
+#TODO Health - add the code for the corruptionbar once corruption signal exists
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

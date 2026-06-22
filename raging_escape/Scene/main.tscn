@@ -1,16 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://d34a2va2xf8ux"]
+[gd_scene load_steps=8 format=3 uid="uid://d34a2va2xf8ux"]
 
+[ext_resource type="Script" uid="uid://doenp6i411ykb" path="res://Scene/main.gd" id="1_2wwxx"]
 [ext_resource type="PackedScene" uid="uid://dtsakxrrdy581" path="res://Scene/player.tscn" id="1_f6udf"]
-[ext_resource type="Texture2D" uid="uid://di7rbm7jgqkoe" path="res://Assets/Saver_Tile.png" id="2_sblpm"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sblpm"]
-texture = ExtResource("2_sblpm")
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-
-[sub_resource type="TileSet" id="TileSet_r34rm"]
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_sblpm")
+[ext_resource type="PackedScene" uid="uid://db8xts6uww2qg" path="res://Scene/control.tscn" id="3_r34rm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sblpm"]
 bg_color = Color(0.168627, 0.0705882, 0.0784314, 1)
@@ -25,6 +17,7 @@ bg_color = Color(0.168627, 0.0705882, 0.0784314, 1)
 bg_color = Color(0.596078, 0.0705882, 0.160784, 1)
 
 [node name="Levels" type="Node2D"]
+script = ExtResource("1_2wwxx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -14)
@@ -39,17 +32,19 @@ Corrution_bar_ui = NodePath("../CanvasLayer/Corruption")
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD9/wAAAAAAAAAAAAD+/wAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAD//wEAAAAAAAAAAAD+/wEAAAAAAAAAAAD9/wEAAAAAAAAAAAD8/wEAAAAAAAAAAAD7/wEAAAAAAAAAAAD6/wEAAAAAAAAAAAD6/wAAAAAAAAAAAAD7/wAAAAAAAAAAAAD8/wAAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAD//wIAAAAAAAAAAAD+/wIAAAAAAAAAAAD9/wIAAAAAAAAAAAD7/wIAAAAAAAAAAAD6/wIAAAAAAAAAAAD8/wIAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAIAAAAAAAAAAAA=")
-tile_set = SubResource("TileSet_r34rm")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="Control" parent="CanvasLayer" instance=ExtResource("3_r34rm")]
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 45.0
+offset_bottom = 43.0
+
 [node name="Health" type="ProgressBar" parent="CanvasLayer"]
-offset_left = 348.0
-offset_top = -330.0
-offset_right = 533.0
-offset_bottom = -303.0
+offset_left = 951.0
+offset_top = 11.0
+offset_right = 1136.0
+offset_bottom = 38.0
 theme_override_styles/background = SubResource("StyleBoxFlat_sblpm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_r34rm")
 max_value = 12.0
@@ -59,10 +54,10 @@ fill_mode = 1
 show_percentage = false
 
 [node name="Corruption" type="ProgressBar" parent="CanvasLayer"]
-offset_left = 403.0
-offset_top = -299.0
-offset_right = 531.0
-offset_bottom = -294.0
+offset_left = 1005.0
+offset_top = 43.0
+offset_right = 1133.0
+offset_bottom = 48.0
 theme_override_styles/background = SubResource("StyleBoxFlat_2wwxx")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3amdw")
 max_value = 12.0
@@ -71,3 +66,5 @@ value = 12.0
 rounded = true
 fill_mode = 1
 show_percentage = false
+
+[node name="Level Container" type="Node2D" parent="."]

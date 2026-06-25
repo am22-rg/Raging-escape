@@ -9,6 +9,13 @@ const JUMP_VELOCITY = -400.0
 
 @export var health_bar_ui: ProgressBar
 @export var Corrution_bar_ui: ProgressBar
+@export var ui: Control
+
+
+func _ready() -> void:
+	ui.connect("pause_game", pause_game)
+	ui.connect("unpause_game", unpause_game)
+
 
 func Take_damage():
 	if health > 1:
@@ -38,3 +45,14 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+
+
+func pause_game() -> void:
+	set_physics_process(false)
+	self.hide()
+
+
+func unpause_game() -> void:
+	set_physics_process(true)
+	self.show()

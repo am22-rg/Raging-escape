@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://db8xts6uww2qg"]
+[gd_scene load_steps=4 format=3 uid="uid://db8xts6uww2qg"]
 
 [ext_resource type="Script" uid="uid://ujnksgvjg4ly" path="res://Script/control.gd" id="1_0ve60"]
 [ext_resource type="Texture2D" uid="uid://bvrysobqqtxaj" path="res://Assets/Screenshot_2026-06-19_at_10.32.29_AM-removebg-preview.png" id="2_20xco"]
+[ext_resource type="Texture2D" uid="uid://6ryyfmk7k3rb" path="res://Assets/Screenshot 2025-09-17 at 12.49.30 PM.png" id="3_l7dqm"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,28 +11,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(28.8513, 16.2267)
 script = ExtResource("1_0ve60")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 2
-offset_left = 24.0
-offset_top = 18.0
-offset_right = 431.0
-offset_bottom = 420.0
-theme_override_constants/separation = 1
-
-[node name="Button" type="TextureButton" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_20xco")
-flip_h = true
-
-[node name="Button2" type="TextureButton" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-size_flags_stretch_ratio = 0.0
-texture_normal = ExtResource("2_20xco")
 
 [node name="VBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -42,31 +21,78 @@ offset_bottom = 804.563
 rotation = -1.5692
 theme_override_constants/separation = 1
 
-[node name="Button" type="TextureButton" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_20xco")
-flip_h = true
-
-[node name="Button2" type="TextureButton" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_20xco")
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="play button" type="TextureButton" parent="."]
+process_mode = 3
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 10.6061
+offset_top = 19.4741
+offset_right = 34.6061
+offset_bottom = 41.4741
+scale = Vector2(0.546409, 0.298505)
+texture_normal = ExtResource("3_l7dqm")
 
-[connection signal="pressed" from="HBoxContainer/Button" to="." method="neg_button_character"]
-[connection signal="pressed" from="HBoxContainer/Button2" to="." method="pos_button_character"]
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="neg_button_level"]
-[connection signal="pressed" from="VBoxContainer/Button2" to="." method="pos_button_level"]
+[node name="NegCharacter" type="TextureButton" parent="."]
+process_mode = 3
+layout_mode = 2
+offset_left = 29.2534
+offset_top = 16.2695
+offset_right = 435.253
+offset_bottom = 418.269
+scale = Vector2(0.0158724, 0.0292308)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("2_20xco")
+flip_h = true
+metadata/_edit_use_anchors_ = true
+
+[node name="PosCharacter" type="TextureButton" parent="."]
+process_mode = 3
+layout_mode = 2
+offset_left = 34.6951
+offset_top = 15.8381
+offset_right = 440.695
+offset_bottom = 417.838
+scale = Vector2(0.015375, 0.0272587)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+texture_normal = ExtResource("2_20xco")
+metadata/_edit_use_anchors_ = true
+
+[node name="NegLevel" type="TextureButton" parent="."]
+process_mode = 3
+layout_mode = 2
+offset_left = 13.3789
+offset_top = 1.47904
+offset_right = 419.379
+offset_bottom = 403.479
+scale = Vector2(0.0163581, 0.0308013)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("2_20xco")
+flip_h = true
+metadata/_edit_use_anchors_ = true
+
+[node name="PosLevel" type="TextureButton" parent="."]
+process_mode = 3
+layout_mode = 2
+offset_left = 21.1776
+offset_top = 1.23254
+offset_right = 427.178
+offset_bottom = 403.233
+scale = Vector2(0.0180079, 0.0311062)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("2_20xco")
+metadata/_edit_use_anchors_ = true
+
 [connection signal="pressed" from="play button" to="." method="play_button_pressed"]
+[connection signal="pressed" from="NegCharacter" to="." method="neg_button_character"]
+[connection signal="pressed" from="PosCharacter" to="." method="pos_button_character"]
+[connection signal="pressed" from="NegLevel" to="." method="neg_button_level"]
+[connection signal="pressed" from="PosLevel" to="." method="pos_button_level"]

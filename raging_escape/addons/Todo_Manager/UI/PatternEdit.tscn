@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://bx11sel2q5wli"]
+[gd_scene load_steps=0 format=3 uid="uid://bx11sel2q5wli"]
 
-[ext_resource type="Script" uid="uid://betg01sk02eyy" path="res://addons/Todo_Manager/PatternEdit.gd" id="1"]
-[ext_resource type="StyleBox" uid="uid://coyt1i52yehl7" path="res://addons/Todo_Manager/UI/PatternContainer.tres" id="1_u1ddt"]
+[ext_resource type="Script" uid="uid://betg01sk02eyy" path="res://Addons/Todo_Manager/PatternEdit.gd" id="1"]
+[ext_resource type="StyleBox" uid="uid://coyt1i52yehl7" path="res://Addons/Todo_Manager/UI/PatternContainer.tres" id="1_u1ddt"]
 
 [node name="Pattern" type="PanelContainer" unique_id=597758889]
 offset_right = 304.0

@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://crwwg3jnpajv1"]
+[gd_scene load_steps=0 format=3 uid="uid://crwwg3jnpajv1"]
 
-[ext_resource type="Script" uid="uid://phqm8fm8s3om" path="res://addons/Todo_Manager/UI/PathEdit.gd" id="1_v1uj4"]
-[ext_resource type="StyleBox" uid="uid://coyt1i52yehl7" path="res://addons/Todo_Manager/UI/PatternContainer.tres" id="1_wkkxb"]
+[ext_resource type="Script" uid="uid://phqm8fm8s3om" path="res://Addons/Todo_Manager/UI/PathEdit.gd" id="1_v1uj4"]
+[ext_resource type="StyleBox" uid="uid://coyt1i52yehl7" path="res://Addons/Todo_Manager/UI/PatternContainer.tres" id="1_wkkxb"]
 
 [node name="PathEdit" type="PanelContainer" unique_id=294956074]
 anchors_preset = -1

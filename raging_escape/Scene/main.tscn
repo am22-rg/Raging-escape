@@ -16,18 +16,20 @@ bg_color = Color(0.168627, 0.0705882, 0.0784314, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3amdw"]
 bg_color = Color(0.596078, 0.0705882, 0.160784, 1)
 
-[node name="Levels" type="Node2D"]
+[node name="Levels" type="Node2D" node_paths=PackedStringArray("ui")]
 script = ExtResource("1_2wwxx")
+ui = NodePath("CanvasLayer/Control")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -14)
+position = Vector2(0, -151)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 
-[node name="Player" parent="." node_paths=PackedStringArray("health_bar_ui", "Corrution_bar_ui") instance=ExtResource("1_f6udf")]
-position = Vector2(0, -14)
+[node name="Player" parent="." node_paths=PackedStringArray("health_bar_ui", "Corrution_bar_ui", "ui") instance=ExtResource("1_f6udf")]
+position = Vector2(0, -151)
 health_bar_ui = NodePath("../CanvasLayer/Health")
 Corrution_bar_ui = NodePath("../CanvasLayer/Corruption")
+ui = NodePath("../CanvasLayer/Control")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
@@ -68,3 +70,4 @@ fill_mode = 1
 show_percentage = false
 
 [node name="Level Container" type="Node2D" parent="."]
+process_mode = 3

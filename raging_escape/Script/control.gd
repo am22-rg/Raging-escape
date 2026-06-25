@@ -1,7 +1,7 @@
 extends Control
 
-signal puase_game()
-signal unpuase_game()
+signal pause_game
+signal unpause_game
 
 
 var levels = {
@@ -9,7 +9,7 @@ var levels = {
 	2: preload("res://Scene/Levels/level_2.tscn"),
 }
 
-@onready var level_container = get_parent().get_node("LevelContainer")
+@onready var level_container: Node2D = $"../../Level Container"
 
 var current_level: PackedScene = levels[1] # Current level to check which scene is running
 var level_node: Node = null
@@ -19,19 +19,20 @@ var character_skins: int = 1
 
 func _ready() -> void:
 	self.show()
-	emit_signal("puase_game")
+	pause_game.emit()
 
 
 # Change level
 func load_level_id(id):
-	emit_signal("puase_game")
+	pause_game.emit()
 	self.show()
 	if levels.has(id): # Load new scene
+		level_select()
 		var scene_instance = levels[id].instantiate()
 		level_container.add_child(scene_instance) # Adds level under the Level container
 		level_node = scene_instance
 		current_level = levels[id]
-		emit_signal("unpuase_game")
+		emit_signal("unpause_game")
 		self.hide()
 
 

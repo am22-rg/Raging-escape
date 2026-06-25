@@ -4,7 +4,7 @@ var health: int = 12
 
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -500.0
 
 
 @export var health_bar_ui: ProgressBar

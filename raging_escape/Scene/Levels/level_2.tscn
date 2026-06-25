@@ -2,14 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://di7rbm7jgqkoe" path="res://Assets/Saver_Tile.png" id="1_leuog"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sxagu"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_leuog"]
 texture = ExtResource("1_leuog")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_cfqvl"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_sxagu")
+sources/0 = SubResource("TileSetAtlasSource_leuog")
 
 [node name="Level_2" type="Node2D"]
 

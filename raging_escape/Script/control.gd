@@ -7,7 +7,11 @@ signal unpause_game
 var levels = {
 	1: preload("res://Scene/Levels/level_1.tscn"),
 	2: preload("res://Scene/Levels/level_2.tscn"),
+	3: preload("res://Scene/Levels/level_3.tscn")
 }
+
+@export var level_label: Label
+@export var character_label: Label
 
 @onready var level_container: Node2D = $"../../Level Container"
 
@@ -53,20 +57,24 @@ func _process(delta: float) -> void:
 
 # TODO Menu - change character on screen menu
 func neg_button_character() -> void:
-	if character > 2:
+	if character > 1:
 		character -= 1
+		character_label.text = str(character)
 
 
 func pos_button_character() -> void:
 	if character < character_skins:
 		character += 1
+		character_label.text = str(character)
 
 
 func neg_button_level() -> void:
-	if level > 2:
+	if level > 1:
 		level -= 1
+		level_label.text = str(level)
 
 
 func pos_button_level() -> void:
-	if level < levels:
+	if level < levels.size():
 		level += 1
+		level_label.text = str(level)

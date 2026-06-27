@@ -49,10 +49,8 @@ func _physics_process(delta: float) -> void:
 
 
 func pause_game() -> void:
-	set_physics_process(false)
 	self.hide()
 
 
 func unpause_game() -> void:
-	set_physics_process(true)
 	self.show()

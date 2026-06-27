@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=4 uid="uid://cmpxb28qcuoqn"]
+
+[ext_resource type="Texture2D" uid="uid://di7rbm7jgqkoe" path="res://Assets/Saver_Tile.png" id="1_4s2xc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3dknv"]
+texture = ExtResource("1_4s2xc")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_0n7x3"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_3dknv")
+
+[node name="Level_4" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+rotation = 0.000513578
+tile_map_data = PackedByteArray("AAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_0n7x3")

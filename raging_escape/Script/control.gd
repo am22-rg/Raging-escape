@@ -7,7 +7,8 @@ signal unpause_game
 var levels = {
 	1: preload("res://Scene/Levels/level_1.tscn"),
 	2: preload("res://Scene/Levels/level_2.tscn"),
-	3: preload("res://Scene/Levels/level_3.tscn")
+	3: preload("res://Scene/Levels/level_3.tscn"),
+	4: preload("res://Scene/Levels/level_4.tscn"),
 }
 
 @export var level_label: Label

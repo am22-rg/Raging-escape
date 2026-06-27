@@ -5,7 +5,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_j47wa"]
 radius = 9.0
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_kelma")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -14,5 +14,5 @@ offset_top = -9.0
 offset_right = 9.0
 offset_bottom = 9.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
 shape = SubResource("CircleShape2D_j47wa")

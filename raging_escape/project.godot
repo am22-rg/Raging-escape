@@ -18,6 +18,11 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg")
 
+[global_group]
+
+enemy="Global enemy group for enemy types"
+player=""
+
 [input]
 
 Right={

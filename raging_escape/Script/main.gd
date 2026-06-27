@@ -5,6 +5,7 @@ signal reset
 
 
 func _ready() -> void:
+	get_tree().paused = true
 	ui.connect("pause_game", pause_game)
 	ui.connect("unpause_game", unpause_game)
 

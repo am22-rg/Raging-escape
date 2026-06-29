@@ -17,10 +17,11 @@ func _ready() -> void:
 	ui.connect("unpause_game", unpause_game)
 
 
-func Take_damage():
+func take_damage(damage):
 	if health > 1:
-		health -= 1
+		health -= damage
 		health_bar_ui.value = health
+		print(health)
 	else:
 		pass
 		# TODO Menu - make a you died menu

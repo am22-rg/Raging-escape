@@ -5,12 +5,14 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_0i62g"]
 radius = 13.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g34os"]
-radius = 13.0
-height = 34.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_g34os"]
+radius = 14.0
 
-[node name="Enemy_Type_1" type="CharacterBody2D" groups=["enemy"]]
+[node name="Enemy_Type_1" type="CharacterBody2D" node_paths=PackedStringArray("timer_attack") groups=["enemy"]]
 script = ExtResource("1_0i62g")
+timer_attack = NodePath("Timer")
+max_health = 5
+damage = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -13.0
@@ -22,11 +24,13 @@ offset_bottom = 13.0
 shape = SubResource("CircleShape2D_0i62g")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
 
 [node name="AttackArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_g34os")
+shape = SubResource("CircleShape2D_g34os")
 
-[connection signal="body_entered" from="AttackArea" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
+[connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]

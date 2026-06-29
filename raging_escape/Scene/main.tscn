@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d34a2va2xf8ux"]
+[gd_scene load_steps=10 format=3 uid="uid://d34a2va2xf8ux"]
 
 [ext_resource type="Script" uid="uid://doenp6i411ykb" path="res://Script/main.gd" id="1_2wwxx"]
 [ext_resource type="PackedScene" uid="uid://dtsakxrrdy581" path="res://Scene/player.tscn" id="1_f6udf"]
@@ -16,6 +16,12 @@ bg_color = Color(0.168627, 0.0705882, 0.0784314, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3amdw"]
 bg_color = Color(0.596078, 0.0705882, 0.160784, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xcnr"]
+bg_color = Color(0.168627, 0.0705882, 0.0784314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ow1sv"]
+bg_color = Color(0.258824, 0.615686, 0.133333, 1)
+
 [node name="Levels" type="Node2D" node_paths=PackedStringArray("ui")]
 script = ExtResource("1_2wwxx")
 ui = NodePath("CanvasLayer/Control")
@@ -28,7 +34,7 @@ position_smoothing_speed = 7.0
 [node name="Player" parent="." node_paths=PackedStringArray("health_bar_ui", "Corrution_bar_ui", "ui") instance=ExtResource("1_f6udf")]
 position = Vector2(0, -151)
 health_bar_ui = NodePath("../CanvasLayer/Health")
-Corrution_bar_ui = NodePath("../CanvasLayer/Corruption")
+Corrution_bar_ui = NodePath("../CanvasLayer/HCorruption")
 ui = NodePath("../CanvasLayer/Control")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
@@ -55,7 +61,7 @@ value = 12.0
 fill_mode = 1
 show_percentage = false
 
-[node name="Corruption" type="ProgressBar" parent="CanvasLayer"]
+[node name="HCorruption" type="ProgressBar" parent="CanvasLayer"]
 offset_left = 1005.0
 offset_top = 43.0
 offset_right = 1133.0
@@ -67,6 +73,18 @@ step = 0.1
 value = 12.0
 rounded = true
 fill_mode = 1
+show_percentage = false
+
+[node name="Corruption" type="ProgressBar" parent="CanvasLayer"]
+offset_left = 21.0
+offset_top = 21.0
+offset_right = 120.0
+offset_bottom = 113.0
+theme_override_styles/background = SubResource("StyleBoxFlat_1xcnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ow1sv")
+max_value = 1.0
+value = 1.0
+fill_mode = 3
 show_percentage = false
 
 [node name="Level Container" type="Node2D" parent="."]

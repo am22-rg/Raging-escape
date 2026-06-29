@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtsakxrrdy581"]
+[gd_scene load_steps=4 format=3 uid="uid://dtsakxrrdy581"]
 
 [ext_resource type="Script" uid="uid://dfegyj5qd4mv6" path="res://Script/player.gd" id="1_kelma"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j47wa"]
 radius = 9.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_kelma"]
+radius = 9.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_kelma")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -14,5 +17,10 @@ offset_top = -9.0
 offset_right = 9.0
 offset_bottom = 9.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_j47wa")
+
+[node name="HurtBox" type="Area2D" parent="." groups=["player"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_kelma")

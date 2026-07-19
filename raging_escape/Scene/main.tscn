@@ -28,6 +28,7 @@ ui = NodePath("CanvasLayer/Control")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -151)
+zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 

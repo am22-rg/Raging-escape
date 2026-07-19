@@ -21,3 +21,6 @@ tile_set = SubResource("TileSet_cfqvl")
 
 [node name="Enemy_Type_1" parent="." instance=ExtResource("2_sxagu")]
 position = Vector2(186, -13)
+
+[node name="Enemy_Type_2" parent="." instance=ExtResource("2_sxagu")]
+position = Vector2(-122, -13)

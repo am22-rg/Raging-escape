@@ -1,21 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtsakxrrdy581"]
+[gd_scene load_steps=5 format=3 uid="uid://dtsakxrrdy581"]
 
 [ext_resource type="Script" uid="uid://dfegyj5qd4mv6" path="res://Script/player.gd" id="1_kelma"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j47wa"]
-radius = 9.0
+radius = 11.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kelma"]
-radius = 9.0
+radius = 11.0
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kelma"]
+size = Vector2(7.9558, 11.958)
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box")]
+scale = Vector2(1.3607, 1.35726)
 script = ExtResource("1_kelma")
+attack_box = NodePath("AttackBox")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -9.0
-offset_top = -9.0
-offset_right = 9.0
-offset_bottom = 9.0
+offset_left = -11.0
+offset_top = -11.0
+offset_right = 11.0
+offset_bottom = 11.0
+metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_j47wa")
@@ -24,3 +30,14 @@ shape = SubResource("CircleShape2D_j47wa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource("CircleShape2D_kelma")
+
+[node name="AttackBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackBox"]
+position = Vector2(13.7271, -6.83656e-07)
+rotation = -1.5708
+scale = Vector2(1.57435, -2.25201)
+shape = SubResource("RectangleShape2D_kelma")
+
+[connection signal="body_entered" from="AttackBox" to="." method="_on_attack_box_body_entered"]
+[connection signal="body_exited" from="AttackBox" to="." method="_on_attack_box_body_exited"]

@@ -34,6 +34,7 @@ wait_time = 1.5
 shape = SubResource("CircleShape2D_g34os")
 
 [node name="MoveRange" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveRange"]
 shape = SubResource("CircleShape2D_fbnoa")

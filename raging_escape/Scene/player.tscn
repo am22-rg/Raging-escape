@@ -39,5 +39,10 @@ rotation = -1.5708
 scale = Vector2(1.57435, -2.25201)
 shape = SubResource("RectangleShape2D_kelma")
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
 [connection signal="body_entered" from="AttackBox" to="." method="_on_attack_box_body_entered"]
 [connection signal="body_exited" from="AttackBox" to="." method="_on_attack_box_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgsp3kexvauwg"]
+[gd_scene load_steps=5 format=3 uid="uid://dgsp3kexvauwg"]
 
 [ext_resource type="Script" uid="uid://cjspudvdman3c" path="res://Script/Enemytypes/enemy_type_1.gd" id="1_0i62g"]
 
@@ -7,6 +7,9 @@ radius = 13.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g34os"]
 radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fbnoa"]
+radius = 267.541
 
 [node name="Enemy_Type_1" type="CharacterBody2D" node_paths=PackedStringArray("timer_attack") groups=["enemy"]]
 script = ExtResource("1_0i62g")
@@ -30,6 +33,13 @@ wait_time = 1.5
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_g34os")
 
+[node name="MoveRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MoveRange"]
+shape = SubResource("CircleShape2D_fbnoa")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
+[connection signal="area_entered" from="MoveRange" to="." method="_on_move_range_entered"]
+[connection signal="area_exited" from="MoveRange" to="." method="_on_move_range_exited"]

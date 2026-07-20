@@ -2,14 +2,18 @@ class_name Enemy
 extends CharacterBody2D
 
 @onready var attack_area = $AttackArea
+@onready var move_range = $MoveRange
+@onready var player = $"."
 
 @export var timer_attack: Timer
 
 @export var max_health: int = 5
 @export var damage: int = 0
-@export var speed: float = 0.0
 
-var player
+@export var direction = true
+@export var speed := 100
+
+var move := false
 var health: int
 var can_attack: bool = true
 var in_range: bool = false
@@ -23,18 +27,34 @@ func _ready():
 	
 	attack_area.area_entered.connect(_on_attack_area_entered)
 	attack_area.area_exited.connect(_on_attack_area_exited)
-	print("connected")
 	
+	move_range.area_entered.connect(_on_move_range_entered)
+	move_range.area_exited.connect(_on_move_range_exited)
 	
-	add_to_group("enemy")
-	if self.is_in_group("enemy"):
-		print("Working")
+	add_to_group("enemy") # Do I need this?
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		
+	if not player == null and move:
+		var direction := signi(player.global_position.x - global_position.x)
+		velocity = Vector2(direction, 0) * speed
+		
+	move_and_slide()
 
+
+func _on_move_range_exited(area):
+	if area.is_in_group("player"):
+		player = null
+		move = false
+
+
+func _on_move_range_entered(area):
+	if area.is_in_group("player"):
+		player = area.get_parent()
+		move = true
 
 
 func _on_attack_timer_timeout():
@@ -45,7 +65,6 @@ func _on_attack_timer_timeout():
 
 
 func _attack():
-	print("Attack")
 	player.take_damage(damage)
 	
 	can_attack = false
@@ -62,7 +81,7 @@ func _on_attack_area_entered(area):
 func _on_attack_area_exited(area):
 	if area.is_in_group("player"):
 		in_range = false
-		
+
 
 # TODO - Add direction and knockback
 func take_damage(damage):
@@ -72,4 +91,6 @@ func take_damage(damage):
 
 
 func die():
+	var add_corruption = randf_range(0.1, 0.3)
+	player.corruption(add_corruption)
 	queue_free()

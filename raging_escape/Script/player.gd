@@ -3,12 +3,16 @@ extends CharacterBody2D
 var health: int = 12 
 var enemys_in_range := []
 var attack_damage: int = 2
+var corruption_val: float = 0
 
 const LEFT := -PI
 const RIGHT := 0
 
 const SPEED = 250.0
 const JUMP_VELOCITY = -500.0
+
+
+@onready var timer: Timer = $Timer
 
 
 @export var health_bar_ui: ProgressBar
@@ -48,35 +52,50 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+# TODO add knock back on hit
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Attack"):
 		for enemy in enemys_in_range:
 			enemy.take_damage(attack_damage)
 
 
+func corruption(corruption_add):
+	if corruption_val in range(0, 1):
+		corruption_val += corruption_add
+	elif corruption_val < 0:
+		corruption_val = 0
+	elif corruption_val > 1:
+		corruption_val = 1
+
+	Corrution_bar_ui.value = corruption_val
+
+
+func _on_timer_timeout():
+	corruption(0.05)
+
+
 func take_damage(damage):
 	if health > 1:
 		health -= damage
 		health_bar_ui.value = health
-		print(health)
 	else:
 		pass
 		# TODO Menu - make a you died menu
 
 
-func pause_game() -> void:
+func pause_game():
 	self.hide()
 
 
-func unpause_game() -> void:
+func unpause_game():
 	self.show()
 
 
-func _on_attack_box_body_entered(body: Node2D) -> void:
+func _on_attack_box_body_entered(body: Node2D):
 	if body.is_in_group("enemy"):
 		enemys_in_range.append(body)
 
 
-func _on_attack_box_body_exited(body: Node2D) -> void:
+func _on_attack_box_body_exited(body: Node2D):
 	if body.is_in_group("enemy"):
 		enemys_in_range.erase(body)

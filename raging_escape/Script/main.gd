@@ -19,12 +19,10 @@ func _process(_delta: float) -> void:
 
 
 func pause_game() -> void:
-	print("pausing")
 	get_tree().paused = true
 	ui.show()
 
 
 func unpause_game() -> void:
-	print("unpausing")
 	get_tree().paused = false
 	ui.hide()

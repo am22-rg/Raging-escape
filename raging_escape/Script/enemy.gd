@@ -7,7 +7,7 @@ extends CharacterBody2D
 
 @export var timer_attack: Timer
 
-@export var max_health: int = 5
+@export var max_health: int = 0
 @export var damage: int = 0
 
 @export var direction = true
@@ -38,10 +38,11 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
-	if not player == null and move:
+	if not player == null and move == true:
 		var direction := signi(player.global_position.x - global_position.x)
-		velocity = Vector2(direction, 0) * speed
-		
+		velocity.x = direction * speed
+	else:
+		velocity.x = 0
 	move_and_slide()
 
 
@@ -55,7 +56,6 @@ func _on_move_range_entered(area):
 	if area.is_in_group("player"):
 		player = area.get_parent()
 		move = true
-
 
 func _on_attack_timer_timeout():
 	can_attack = true
@@ -91,6 +91,6 @@ func take_damage(damage):
 
 
 func die():
-	var add_corruption = randf_range(0.1, 0.3)
-	player.corruption(add_corruption)
+	var corruption = randf_range(0.1, 0.25)
+	player.corruption(corruption)
 	queue_free()

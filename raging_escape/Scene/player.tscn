@@ -2,11 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dfegyj5qd4mv6" path="res://Script/player.gd" id="1_kelma"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_j47wa"]
-radius = 11.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y8w33"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kelma"]
-radius = 11.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xa75v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kelma"]
 size = Vector2(7.9558, 11.958)
@@ -24,23 +22,23 @@ offset_bottom = 11.0
 metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_j47wa")
+shape = SubResource("RectangleShape2D_y8w33")
 
 [node name="HurtBox" type="Area2D" parent="." groups=["player"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource("CircleShape2D_kelma")
+shape = SubResource("RectangleShape2D_xa75v")
 
 [node name="AttackBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2(13.7271, -6.83656e-07)
+position = Vector2(13.9634, 3.01246e-12)
 rotation = -1.5708
 scale = Vector2(1.57435, -2.25201)
 shape = SubResource("RectangleShape2D_kelma")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 2.0
 autostart = true
 
 [connection signal="body_entered" from="AttackBox" to="." method="_on_attack_box_body_entered"]

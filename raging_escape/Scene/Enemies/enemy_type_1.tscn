@@ -14,7 +14,8 @@ radius = 267.541
 [node name="Enemy_Type_1" type="CharacterBody2D" node_paths=PackedStringArray("timer_attack") groups=["enemy"]]
 script = ExtResource("1_0i62g")
 timer_attack = NodePath("Timer")
-damage = 1
+max_health = 3
+damage = -1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -13.0

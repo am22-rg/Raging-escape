@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 var health: int = 12 
+var health_regen := 0.2
 var enemys_in_range := []
-var attack_damage: int = 2
+var attack_damage: int = 1
 var corruption_val: float = 0
+var corruption_equaliser := -0.01
 
 const LEFT := -PI
 const RIGHT := 0
@@ -60,27 +62,31 @@ func _process(_delta: float) -> void:
 
 
 func corruption(corruption_add):
-	if corruption_val in range(0, 1):
-		corruption_val += corruption_add
-	elif corruption_val < 0:
+	if corruption_val < 0:
 		corruption_val = 0
 	elif corruption_val > 1:
 		corruption_val = 1
-
+	else:
+		corruption_val += corruption_add
 	Corrution_bar_ui.value = corruption_val
 
 
 func _on_timer_timeout():
-	corruption(0.05)
+	corruption(corruption_equaliser)
+	update_health(health_regen)
 
 
 func take_damage(damage):
 	if health > 1:
-		health -= damage
-		health_bar_ui.value = health
+		update_health(damage)
 	else:
 		pass
 		# TODO Menu - make a you died menu
+
+
+func update_health(change):
+	health += change
+	health_bar_ui.value = health
 
 
 func pause_game():

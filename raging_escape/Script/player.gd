@@ -69,6 +69,7 @@ func corruption(corruption_add):
 	else:
 		corruption_val += corruption_add
 	Corrution_bar_ui.value = corruption_val
+	#SignalManager.corruption_global.emit(corruption_val)
 
 
 func _on_timer_timeout():

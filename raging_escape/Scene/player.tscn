@@ -1,6 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dtsakxrrdy581"]
+[gd_scene load_steps=6 format=3 uid="uid://dtsakxrrdy581"]
 
 [ext_resource type="Script" uid="uid://dfegyj5qd4mv6" path="res://Script/player.gd" id="1_kelma"]
+
+[sub_resource type="Curve" id="Curve_kelma"]
+_limits = [0.0, 5.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.496972, 1.03551, 0, 0, Vector2(0.35514, 1.27725), 2.48987, 2.48987, 0, 0, Vector2(0.654206, 2.14031), 4.41062, 4.41062, 0, 0, Vector2(0.836449, 3.44134), 8.62334, 8.62334, 0, 0, Vector2(1, 5), 9.83449, 4.64845, 0, 0]
+point_count = 5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y8w33"]
 
@@ -12,6 +17,7 @@ size = Vector2(7.9558, 11.958)
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box")]
 scale = Vector2(1.3607, 1.35726)
 script = ExtResource("1_kelma")
+my_curve = SubResource("Curve_kelma")
 attack_box = NodePath("AttackBox")
 
 [node name="ColorRect" type="ColorRect" parent="."]

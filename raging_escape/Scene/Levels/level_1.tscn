@@ -24,3 +24,21 @@ position = Vector2(-312, -415)
 
 [node name="Enemy_Type_3" parent="." instance=ExtResource("2_sxagu")]
 position = Vector2(-961, -37)
+
+[node name="Enemy_Type_4" parent="." instance=ExtResource("2_sxagu")]
+position = Vector2(-624, -830)
+
+[node name="Enemy_Type_5" parent="." instance=ExtResource("2_sxagu")]
+position = Vector2(-936, -1245)
+
+[node name="Enemy_Type_6" parent="." instance=ExtResource("2_sxagu")]
+position = Vector2(-1248, -1660)
+
+[node name="Enemy_Type_7" parent="." instance=ExtResource("2_sxagu")]
+position = Vector2(-1560, -2075)
+
+[node name="Enemy_Type_8" parent="." instance=ExtResource("2_sxagu")]
+position = Vector2(-1872, -2490)
+
+[node name="Enemy_Type_9" parent="." instance=ExtResource("2_sxagu")]
+position = Vector2(-2184, -2905)

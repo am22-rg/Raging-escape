@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-var health: int = 12 
-var health_regen := 0.2
+var health: float = 12
+var health_regen := 0.5
 var enemys_in_range := []
 var attack_damage: int = 1
 var corruption_val: float = 0
@@ -13,10 +13,10 @@ const RIGHT := 0
 const SPEED = 250.0
 const JUMP_VELOCITY = -500.0
 
-
 @onready var timer: Timer = $Timer
 
 
+@export var my_curve: Curve
 @export var health_bar_ui: ProgressBar
 @export var Corrution_bar_ui: ProgressBar
 @export var ui: Control
@@ -26,6 +26,8 @@ const JUMP_VELOCITY = -500.0
 func _ready() -> void:
 	ui.connect("pause_game", pause_game)
 	ui.connect("unpause_game", unpause_game)
+	
+	SignalManager.corruption_sig.connect(damage_multiplier)
 
 
 #TODO Health - add the code for the corruptionbar once corruption signal exists
@@ -57,8 +59,14 @@ func _physics_process(delta: float) -> void:
 # TODO add knock back on hit
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Attack"):
-		for enemy in enemys_in_range:
-			enemy.take_damage(attack_damage)
+		damage_multiplier()
+
+
+func damage_multiplier():
+	var curve_multiplier := my_curve.sample(corruption_val)
+	var multiplied_damage := attack_damage * curve_multiplier
+	for enemy in enemys_in_range:
+		enemy.take_damage(multiplied_damage)
 
 
 func corruption(corruption_add):
@@ -69,7 +77,6 @@ func corruption(corruption_add):
 	else:
 		corruption_val += corruption_add
 	Corrution_bar_ui.value = corruption_val
-	#SignalManager.corruption_global.emit(corruption_val)
 
 
 func _on_timer_timeout():
@@ -86,7 +93,11 @@ func take_damage(damage):
 
 
 func update_health(change):
-	health += change
+	if health >= 12:
+		health = 12
+	else:
+		health += change
+	print(health)
 	health_bar_ui.value = health
 
 

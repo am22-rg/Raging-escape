@@ -14,6 +14,10 @@ config/name="Raging_Escape"
 run/main_scene="uid://d34a2va2xf8ux"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
+[autoload]
+
+SignalManager="*res://Script/signal_manager.gd"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg")

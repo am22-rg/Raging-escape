@@ -2,21 +2,18 @@ extends Node2D
 
 signal reset
 
-var trauma := 0.0
 var multi_power: int = 2
-var corruption_val
+var corruption_val: float = 0
+
+var noise := FastNoiseLite.new()
+var noise_time: float = 0.0
 
 @export var ui: Control
 
-@export var decay: float = 0.8
-@export var max_offset: Vector2 = Vector2(30, 20)
+@export var shake_speed: float = 4
+@export var corruption_multiplier := 5
+@export var max_offset: Vector2 = Vector2(5, 3)
 @onready var camera: Camera2D = $Camera2D
-
-
-func shake():
-	trauma * corruption_val
-	var amount = pow(trauma, multi_power)
-	camera.offset.x = max_offset * amount
 
 
 func _ready() -> void:
@@ -24,20 +21,37 @@ func _ready() -> void:
 	ui.connect("pause_game", pause_game)
 	ui.connect("unpause_game", unpause_game)
 	
+	# Get the speed of the shake and seed variation
+	noise.seed = randi()
+	noise.frequency = 0.5
+	
 	# Get a connection to the signal manager for screen shake 
 	SignalManager.corruption_sig.connect(update_corruption)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(delta):
+	# Make camera shake 
+	if corruption_val > 0:
+		noise_time += delta * shake_speed
+		
+		var amount = pow((corruption_val * corruption_multiplier), multi_power) 
+		
+		camera.offset = Vector2(
+			noise.get_noise_1d(noise_time) * max_offset.x * amount,
+			noise.get_noise_1d(noise_time + 200) * max_offset.y * amount
+			)
+	else:
+		camera.offset = Vector2.ZERO
+	
 	if Input.is_action_just_pressed("ui_cancel"):
 		pause_game()
 		ui.level_select()
 		ui.show()
 
 
-func update_corruption():
-	pass
+func update_corruption(corruption):
+	print(corruption)
+	corruption_val = corruption
 
 
 func pause_game() -> void:

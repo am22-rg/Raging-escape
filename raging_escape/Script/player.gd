@@ -60,21 +60,24 @@ func _process(_delta: float) -> void:
 		damage_multiplier()
 
 
+# Made a curve for multiplying damage to deal to enemy based on corruption
 func damage_multiplier():
 	var curve_multiplier := my_curve.sample(corruption_val)
 	var multiplied_damage := attack_damage * curve_multiplier
+	
 	for enemy in enemys_in_range:
 		enemy.take_damage(multiplied_damage)
 
 
 func corruption(corruption_add):
+	corruption_val += corruption_add
 	if corruption_val < 0:
 		corruption_val = 0
 	elif corruption_val > 1:
 		corruption_val = 1
-	else:
-		corruption_val += corruption_add
+	
 	Corrution_bar_ui.value = corruption_val
+	SignalManager.corruption_sig.emit(corruption_val)
 
 
 func _on_timer_timeout():
@@ -91,12 +94,18 @@ func take_damage(damage):
 
 
 func update_health(change):
-	if health >= 12:
-		health = 12
-	else:
+	if health > 1:
 		health += change
-	print(health)
-	health_bar_ui.value = health
+		
+		if health >= 12:
+			health = 12
+		
+		print(health)
+		health_bar_ui.value = health
+	else:
+		pass
+		# TODO Menu - make a you died menu
+	
 
 
 func pause_game():

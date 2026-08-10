@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var timer_attack: Timer
 
 @export var max_health: int = 0
-@export var damage: int = 0
+@export var damage: int = 1
 
 @export var direction = true
 @export var speed := 100
@@ -30,8 +30,6 @@ func _ready():
 	
 	move_range.area_entered.connect(_on_move_range_entered)
 	move_range.area_exited.connect(_on_move_range_exited)
-	
-	add_to_group("enemy") # Do I need this?
 
 
 func _physics_process(delta):
@@ -65,7 +63,8 @@ func _on_attack_timer_timeout():
 
 
 func _attack():
-	player.take_damage(damage)
+	print("attacking")
+	player.update_health(-damage)
 	
 	can_attack = false
 	timer_attack.start()

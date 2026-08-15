@@ -31,7 +31,7 @@ max_offset = Vector2(2, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -151)
-scale = Vector2(1.3607, 1.35726)
+scale = Vector2(0.882785, 0.880553)
 zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0

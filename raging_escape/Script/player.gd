@@ -94,7 +94,7 @@ func take_damage(damage):
 
 
 func update_health(change):
-	if health > 1:
+	if health >= 1:
 		health += change
 		
 		if health >= 12:

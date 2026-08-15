@@ -15,7 +15,7 @@ point_count = 5
 size = Vector2(7.9558, 11.958)
 
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box")]
-scale = Vector2(1.3607, 1.35726)
+scale = Vector2(0.882785, 0.880553)
 script = ExtResource("1_kelma")
 my_curve = SubResource("Curve_kelma")
 attack_box = NodePath("AttackBox")

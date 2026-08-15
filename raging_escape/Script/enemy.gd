@@ -56,6 +56,7 @@ func _on_move_range_entered(area):
 		move = true
 
 func _on_attack_timer_timeout():
+	print("timer working")
 	can_attack = true
 	
 	if in_range:

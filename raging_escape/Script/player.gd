@@ -4,6 +4,8 @@ var health: float = 12
 var health_regen := 0.5
 var enemys_in_range := []
 var attack_damage: int = 1
+var dash: int = 3000
+var dash_again: bool = true
 var corruption_val: float = 0
 var corruption_equaliser := -0.01
 
@@ -13,8 +15,7 @@ const RIGHT := 0
 const SPEED = 250.0
 const JUMP_VELOCITY = -500.0
 
-@onready var timer: Timer = $Timer
-
+@onready var dash_timer: Timer = $DashTimer
 
 @export var my_curve: Curve
 @export var health_bar_ui: ProgressBar
@@ -41,8 +42,15 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 
 	var direction := Input.get_axis("Left", "Right")
+	
 	if direction:
 		velocity.x = direction * SPEED
+		
+		# lets the player dash then addeds a cool down
+		if Input.is_action_just_pressed("Dash") and dash_again == true:
+			velocity.x += direction * dash
+			dash_again = false
+			dash_timer.start()
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
@@ -80,7 +88,10 @@ func corruption(corruption_add):
 	SignalManager.corruption_sig.emit(corruption_val)
 
 
-func _on_timer_timeout():
+func _on_dash_timer_timeout() -> void:
+	dash_again = true
+
+func _on_const_timer_timeout():
 	corruption(corruption_equaliser)
 	update_health(health_regen)
 
@@ -100,7 +111,6 @@ func update_health(change):
 		if health >= 12:
 			health = 12
 		
-		print(health)
 		health_bar_ui.value = health
 	else:
 		pass

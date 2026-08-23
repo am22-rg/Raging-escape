@@ -30,7 +30,7 @@ func _ready() -> void:
 	
 	SignalManager.corruption_sig.connect(damage_multiplier)
 
-
+ 
 #TODO Health - add the code for the corruptionbar once corruption signal exists
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

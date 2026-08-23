@@ -21,8 +21,6 @@ var start_time = Time.get_ticks_msec()
 
 func _ready() -> void:
 	get_tree().paused = true
-	ui.connect("pause_game", pause_game)
-	ui.connect("unpause_game", unpause_game)
 	
 	# Get the speed of the shake and seed variation
 	noise.seed = randi()
@@ -30,7 +28,17 @@ func _ready() -> void:
 	
 	# Get a connection to the signal manager for screen shake 
 	SignalManager.corruption_sig.connect(update_corruption)
+	SignalManager.play_game.connect(play_game)
+	SignalManager.pause_game.connect(pause_game)
+	
+func pause_game() -> void:
+	get_tree().paused = true
+	ui.show()
 
+
+func play_game() -> void:
+	get_tree().paused = false
+	ui.hide()
 
 func _process(delta):
 	# Get the elapsed time
@@ -67,13 +75,3 @@ func _process(delta):
 
 func update_corruption(corruption):
 	corruption_val = corruption
-
-
-func pause_game() -> void:
-	get_tree().paused = true
-	ui.show()
-
-
-func unpause_game() -> void:
-	get_tree().paused = false
-	ui.hide()

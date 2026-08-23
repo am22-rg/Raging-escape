@@ -24,12 +24,12 @@ var character_skins: int = 1
 
 func _ready() -> void:
 	self.show()
-	pause_game.emit()
+	SignalManager.pause_game.emit()
 
 
 # Change level
 func load_level_id(id):
-	pause_game.emit()
+	SignalManager.pause_game.emit()
 	self.show()
 	if levels.has(id): # Load new scene
 		level_select()
@@ -37,7 +37,7 @@ func load_level_id(id):
 		level_container.add_child(scene_instance) # Adds level under the Level container
 		level_node = scene_instance
 		current_level = levels[id]
-		emit_signal("unpause_game")
+		SignalManager.play_game.emit()
 		self.hide()
 
 

@@ -25,12 +25,22 @@ const JUMP_VELOCITY = -500.0
 
 
 func _ready() -> void:
-	ui.connect("pause_game", pause_game)
-	ui.connect("unpause_game", unpause_game)
+	self.hide()
 	
+	# Connect SignalManager signals for play, pause and corruption
 	SignalManager.corruption_sig.connect(damage_multiplier)
+	SignalManager.pause_game.connect(_pause_game)
+	SignalManager.play_game.connect(_play_game)
 
+
+func _pause_game():
+	self.hide()
+
+
+func _play_game():
+	self.show()
  
+
 #TODO Health - add the code for the corruptionbar once corruption signal exists
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -118,12 +128,7 @@ func update_health(change):
 	
 
 
-func pause_game():
-	self.hide()
 
-
-func unpause_game():
-	self.show()
 
 
 func _on_attack_box_body_entered(body: Node2D):

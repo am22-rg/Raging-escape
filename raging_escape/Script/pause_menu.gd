@@ -3,15 +3,15 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Connect the pause and play signals the the puase menu
-	SignalManager.pause_game.connect(_game_playing)
-	SignalManager.play_game.connect(_game_paused)
-	
 	self.hide()
+	
+	# Connect the pause and play signals the the puase menu
+	SignalManager.pause_game.connect(_game_running)
+	SignalManager.play_game.connect(_game_paused)
 
 
 # Hide self when the game is playing again
-func _game_playing():
+func _game_running():
 	self.hide()
 
 
@@ -23,7 +23,9 @@ func _game_paused():
 # Play button pressed
 func _on_play_pressed() -> void:
 	# Emits a signal that the game is playing
+	print("emitted")
 	SignalManager.play_game.emit() 
+	
 
 
 func _on_menu_pressed() -> void:

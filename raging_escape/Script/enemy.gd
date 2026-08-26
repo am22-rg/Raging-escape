@@ -20,17 +20,21 @@ var in_range: bool = false
 
 
 func _ready():
+	self.hide()
+	
 	health = max_health
 	
 	# Connecting all the functions
 	timer_attack.timeout.connect(_on_attack_timer_timeout)
-	
-	attack_area.area_entered.connect(_on_attack_area_entered)
-	attack_area.area_exited.connect(_on_attack_area_exited)
-	
-	move_range.area_entered.connect(_on_move_range_entered)
-	move_range.area_exited.connect(_on_move_range_exited)
+	SignalManager.pause_game.connect(pause_game)
+	SignalManager.play_game.connect(play_game)
 
+
+func pause_game():
+	self.hide()
+
+func play_game():
+	self.show()
 
 func _physics_process(delta):
 	if not is_on_floor():

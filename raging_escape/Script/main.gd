@@ -1,6 +1,5 @@
 extends Node2D
 
-signal reset
 
 var multi_power: int = 2
 var corruption_val: float = 0
@@ -10,9 +9,10 @@ var noise_time: float = 0.0
 
 var start_time = Time.get_ticks_msec()
 
-@onready var label: Label = $CanvasLayer/Label
+@onready var label: Label = $CanvasLayer/GameUI/Label
+@onready var menu_ui: Control = $CanvasLayer/Menu
+@onready var pause_ui: Control = $CanvasLayer/PauseMenu
 
-@export var ui: Control
 @export var shake_speed: float = 4
 @export var corruption_multiplier := 5
 @export var max_offset: Vector2 = Vector2(5, 3)
@@ -28,27 +28,33 @@ func _ready() -> void:
 	
 	# Get a connection to the signal manager for screen shake 
 	SignalManager.corruption_sig.connect(update_corruption)
-	SignalManager.play_game.connect(play_game)
-	SignalManager.pause_game.connect(pause_game)
+	SignalManager.play_game.connect(_game_running)
+	SignalManager.pause_game.connect(_game_puased)
 	
-func pause_game() -> void:
+func _game_puased() -> void:
 	get_tree().paused = true
-	ui.show()
+	pause_ui.show()
+	
+	# When the puase menu is open the menu doesn't take input
+	pause_ui.mouse_filter = Control.MOUSE_FILTER_STOP
 
-
-func play_game() -> void:
+func _game_running() -> void:
 	get_tree().paused = false
-	ui.hide()
+	menu_ui.hide()
+	pause_ui.hide()
+	
+	# When the game is running the ui doesn't take input
+	menu_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _process(delta):
 	# Get the elapsed time
 	var elapsed = Time.get_ticks_msec() - start_time
 	
 	# Make and update all the values for the label
-	var mins = elapsed / 6000
+	var mins = elapsed / 60000
 	var secs = (elapsed / 1000) % 60
 	var mili_secs = (elapsed % 1000) / 10
-	label.text = "%02d:%02d:%02d" % [mins, secs, mili_secs]
+	label.text = "%02d : %02d : %02d" % [mins, secs, mili_secs]
 	
 	
 	# Make camera shake 
@@ -68,9 +74,9 @@ func _process(delta):
 		camera.offset = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("ui_cancel"):
-		pause_game()
-		ui.level_select()
-		ui.show()
+		_game_puased()
+		menu_ui.level_select()
+		menu_ui.show()
 
 
 func update_corruption(corruption):

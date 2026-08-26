@@ -24,12 +24,10 @@ var character_skins: int = 1
 
 func _ready() -> void:
 	self.show()
-	SignalManager.pause_game.emit()
 
 
 # Change level
 func load_level_id(id):
-	SignalManager.pause_game.emit()
 	self.show()
 	if levels.has(id): # Load new scene
 		level_select()

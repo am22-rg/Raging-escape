@@ -1,5 +1,6 @@
 extends Control
 
+@export var menu_ui: Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,8 +30,8 @@ func _on_play_pressed() -> void:
 
 
 func _on_menu_pressed() -> void:
-	pass # Replace with function body.
+	SignalManager.reset.emit()
 
 
 func _on_reset_pressed() -> void:
-	pass # Replace with function body.
+	pass

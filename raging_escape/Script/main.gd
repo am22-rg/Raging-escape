@@ -12,6 +12,7 @@ var start_time = Time.get_ticks_msec()
 @onready var label: Label = $CanvasLayer/GameUI/Label
 @onready var menu_ui: Control = $CanvasLayer/Menu
 @onready var pause_ui: Control = $CanvasLayer/PauseMenu
+@onready var game_ui: Control = $CanvasLayer/GameUI
 
 @export var shake_speed: float = 4
 @export var corruption_multiplier := 5
@@ -30,15 +31,35 @@ func _ready() -> void:
 	SignalManager.corruption_sig.connect(update_corruption)
 	SignalManager.play_game.connect(_game_running)
 	SignalManager.pause_game.connect(_game_puased)
+	SignalManager.reset.connect(_reset)
+
+
+func _reset():
+	# Pause game engine
+	get_tree().paused = true
 	
-func _game_puased() -> void:
+	# Remove the current level
+	# TODO redundent/can remove once the backround for menu ui is there
+	menu_ui.level_select()
+	
+	# Make sure that only the menu ui is taking input
+	menu_ui.mouse_filter = Control.MOUSE_FILTER_STOP
+	pause_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	# Hide the game ui
+	pause_ui.hide()
+	game_ui.hide()
+	menu_ui.show()
+
+
+func _game_puased():
 	get_tree().paused = true
 	pause_ui.show()
 	
 	# When the puase menu is open the menu doesn't take input
 	pause_ui.mouse_filter = Control.MOUSE_FILTER_STOP
 
-func _game_running() -> void:
+func _game_running():
 	get_tree().paused = false
 	menu_ui.hide()
 	pause_ui.hide()
@@ -73,10 +94,10 @@ func _process(delta):
 		# Otherwise no offset
 		camera.offset = Vector2.ZERO
 	
-	if Input.is_action_just_pressed("ui_cancel"):
-		_game_puased()
-		menu_ui.level_select()
-		menu_ui.show()
+	#if Input.is_action_just_pressed("ui_cancel"):
+		#_game_puased()
+		#menu_ui.level_select()
+		#menu_ui.show()
 
 
 func update_corruption(corruption):

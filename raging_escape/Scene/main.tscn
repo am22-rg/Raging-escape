@@ -26,14 +26,12 @@ corruption_multiplier = 7
 max_offset = Vector2(2, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -151)
 scale = Vector2(0.882785, 0.880553)
 zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 
 [node name="Player" parent="." node_paths=PackedStringArray("health_bar_ui", "Corrution_bar_ui", "ui") instance=ExtResource("1_f6udf")]
-position = Vector2(0, -151)
 health_bar_ui = NodePath("../CanvasLayer/GameUI/Health")
 Corrution_bar_ui = NodePath("../CanvasLayer/GameUI/Corruption")
 ui = NodePath("../CanvasLayer/Menu")
@@ -43,11 +41,12 @@ remote_path = NodePath("../../Camera2D")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Menu" parent="CanvasLayer" instance=ExtResource("3_r34rm")]
+[node name="Menu" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("3_r34rm")]
 offset_left = 5.0
 offset_top = 3.0
 offset_right = 45.0
 offset_bottom = 43.0
+player = NodePath("../../Player")
 
 [node name="GameUI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -114,7 +113,8 @@ offset_bottom = 48.0
 grow_horizontal = 0
 text = "pause"
 
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("6_1xcnr")]
+[node name="PauseMenu" parent="CanvasLayer" node_paths=PackedStringArray("menu_ui") instance=ExtResource("6_1xcnr")]
+menu_ui = NodePath("../Menu")
 
 [node name="Level Container" type="Node2D" parent="."]
 process_mode = 3

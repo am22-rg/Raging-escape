@@ -13,6 +13,7 @@ var levels = {
 
 @export var level_label: Label
 @export var character_label: Label
+@export var player: CharacterBody2D
 
 @onready var level_container: Node2D = $"../../Level Container"
 
@@ -30,11 +31,19 @@ func _ready() -> void:
 func load_level_id(id):
 	self.show()
 	if levels.has(id): # Load new scene
+		# Make sure the level node is empty
 		level_select()
+		
+		# Instance the level and add it to the level node
 		var scene_instance = levels[id].instantiate()
-		level_container.add_child(scene_instance) # Adds level under the Level container
+		level_container.add_child(scene_instance)
 		level_node = scene_instance
 		current_level = levels[id]
+		
+		# Make sure the player will spawn in the correct position
+		player.global_position = Vector2(0, 0)
+		
+		# Start running the game
 		SignalManager.play_game.emit()
 		self.hide()
 

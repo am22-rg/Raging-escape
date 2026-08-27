@@ -24,8 +24,11 @@ func _ready():
 	
 	health = max_health
 	
-	# Connecting all the functions
+	attack_area.area_entered.connect(_on_attack_area_entered)
+	attack_area.area_exited.connect(_on_attack_area_exited)
+	
 	timer_attack.timeout.connect(_on_attack_timer_timeout)
+	
 	SignalManager.pause_game.connect(pause_game)
 	SignalManager.play_game.connect(play_game)
 
@@ -60,7 +63,6 @@ func _on_move_range_entered(area):
 		move = true
 
 func _on_attack_timer_timeout():
-	print("timer working")
 	can_attack = true
 	
 	if in_range:
@@ -68,8 +70,7 @@ func _on_attack_timer_timeout():
 
 
 func _attack():
-	print("attacking")
-	player.update_health(-damage)
+	player.update_health(damage)
 	
 	can_attack = false
 	timer_attack.start()

@@ -5,15 +5,15 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_0i62g"]
 radius = 13.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_g34os"]
-radius = 14.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g34os"]
+size = Vector2(28, 27)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fbnoa"]
 radius = 267.541
 
 [node name="Enemy_Type_1" type="CharacterBody2D" node_paths=PackedStringArray("timer_attack") groups=["enemy"]]
 script = ExtResource("1_0i62g")
-timer_attack = NodePath("Timer")
+timer_attack = NodePath("AttackTimer")
 max_health = 3
 damage = -1
 
@@ -26,13 +26,14 @@ offset_bottom = 13.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0i62g")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="."]
 wait_time = 1.5
 
 [node name="AttackArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-shape = SubResource("CircleShape2D_g34os")
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_g34os")
 
 [node name="MoveRange" type="Area2D" parent="."]
 collision_layer = 0
@@ -40,7 +41,7 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MoveRange"]
 shape = SubResource("CircleShape2D_fbnoa")
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
 [connection signal="area_entered" from="MoveRange" to="." method="_on_move_range_entered"]

@@ -30,8 +30,8 @@ func _on_play_pressed() -> void:
 
 
 func _on_menu_pressed() -> void:
-	SignalManager.reset.emit()
+	SignalManager.to_menu.emit()
 
 
-func _on_reset_pressed() -> void:
+func _on_to_menu_pressed() -> void:
 	pass

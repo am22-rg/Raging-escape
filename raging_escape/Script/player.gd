@@ -27,11 +27,10 @@ const JUMP_VELOCITY = -500.0
 func _ready() -> void:
 	self.hide()
 	
-	# Connect SignalManager signals for play, pause and corruption
+	# Connects SignalManager signals needed
 	SignalManager.corruption_sig.connect(damage_multiplier)
 	SignalManager.pause_game.connect(_pause_game)
 	SignalManager.play_game.connect(_play_game)
-
 
 func _pause_game():
 	self.hide()
@@ -39,6 +38,9 @@ func _pause_game():
 
 func _play_game():
 	self.show()
+	
+	# Set the velocity to zero
+	velocity = Vector2.ZERO
  
 
 #TODO Health - add the code for the corruptionbar once corruption signal exists
@@ -107,7 +109,7 @@ func _on_const_timer_timeout():
 
 
 func take_damage(damage):
-	if health > 1:
+	if health >= 1:
 		update_health(damage)
 	else:
 		pass
@@ -118,8 +120,13 @@ func update_health(change):
 	if health >= 1:
 		health += change
 		
+		print(health)
+		
+		# To insure health cannot excede the limit
 		if health >= 12:
 			health = 12
+		
+		print(health)
 		
 		health_bar_ui.value = health
 	else:

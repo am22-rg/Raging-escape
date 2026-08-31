@@ -21,8 +21,14 @@ var level: int = 1
 var character: int = 1
 var character_skins: int = 1
 
-func _ready() -> void:
+# Show the menu at the start of the game
+func _ready():
 	self.show()
+
+
+# Open the correct level
+func play_button_pressed():
+	load_level_id(level)
 
 
 # Change level
@@ -46,51 +52,32 @@ func load_level_id(id):
 		self.hide()
 
 
+# Find the level number and delete the current level
 func level_select():
 	self.show()
 	
 	# Send current level to the game engine
 	var level_number := -1
 	
+	# Find the current level number
 	for key in levels:
 		if levels[key] == current_level:
 			level_number = key
-
+	
+	# Send to the game engine
 	send_level.emit(level_number)
 	
 	if is_instance_valid(level_node): # Get rid of current scene
 		level_node.queue_free()
 
 
-# Open the correct level
-func play_button_pressed() -> void:
-	load_level_id(level)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
-# TODO Menu - change character on screen menu
-func neg_button_character() -> void:
-	if character > 1:
-		character -= 1
-		character_label.text = str(character)
-
-
-func pos_button_character() -> void:
-	if character < character_skins:
-		character += 1
-		character_label.text = str(character)
-
-
-func neg_button_level() -> void:
+func neg_button_level():
 	if level > 1:
 		level -= 1
 		level_label.text = str(level)
 
 
-func pos_button_level() -> void:
+func pos_button_level():
 	if level < levels.size():
 		level += 1
 		level_label.text = str(level)

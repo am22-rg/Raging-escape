@@ -19,6 +19,7 @@ var current_level: int = 0
 @onready var menu_ui: Control = $CanvasLayer/Menu
 @onready var pause_ui: Control = $CanvasLayer/PauseMenu
 @onready var game_ui: Control = $CanvasLayer/GameUI
+@onready var player: CharacterBody2D = $Player
 
 @onready var camera: Camera2D = $Camera2D
 
@@ -44,8 +45,17 @@ func _ready() -> void:
 	SignalManager.reset.connect(_reset_level)
 	SignalManager.to_menu.connect(_to_menu)
 	
+	SignalManager.died.connect(_player_died)
+	
 	menu_ui.send_level.connect(_get_current_level) # Gets the current level
 
+
+# Reset the game after the player dies
+func _player_died():
+	# Reset the corruption 
+	SignalManager.corruption_sig.emit(0)
+	
+	player.health = 12
 
 func _to_menu():
 	first_play = true
@@ -59,6 +69,7 @@ func _to_menu():
 	# Hide the game ui
 	pause_ui.hide()
 	game_ui.hide()
+	player.hide()
 	
 	# Remove the current level
 	# TODO redundent/can remove once the backround for menu ui is there

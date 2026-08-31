@@ -13,53 +13,17 @@ offset_bottom = 40.0
 scale = Vector2(28.8513, 16.2267)
 script = ExtResource("1_0ve60")
 level_label = NodePath("Level")
-character_label = NodePath("Character")
+character_label = NodePath("")
 
 [node name="play button" type="TextureButton" parent="."]
 process_mode = 3
 layout_mode = 0
-offset_left = 10.6061
+offset_left = 13.3789
 offset_top = 19.4741
-offset_right = 34.6061
+offset_right = 37.3789
 offset_bottom = 41.4741
 scale = Vector2(0.546409, 0.298505)
 texture_normal = ExtResource("3_l7dqm")
-
-[node name="NegCharacter" type="TextureButton" parent="."]
-process_mode = 3
-layout_mode = 2
-anchor_left = -0.031335
-anchor_top = -0.00673752
-anchor_right = -0.0313248
-anchor_bottom = -0.00672531
-offset_left = 29.2534
-offset_top = 16.2695
-offset_right = 435.253
-offset_bottom = 418.269
-scale = Vector2(0.0158724, 0.0292308)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_20xco")
-flip_h = true
-metadata/_edit_use_anchors_ = true
-
-[node name="PosCharacter" type="TextureButton" parent="."]
-process_mode = 3
-layout_mode = 2
-anchor_left = -0.010397
-anchor_top = 0.0061625
-anchor_right = -0.0103943
-anchor_bottom = 0.00616455
-offset_left = 34.6951
-offset_top = 15.8381
-offset_right = 440.695
-offset_bottom = 417.838
-scale = Vector2(0.0163237, 0.028412)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-size_flags_stretch_ratio = 0.0
-texture_normal = ExtResource("2_20xco")
-metadata/_edit_use_anchors_ = true
 
 [node name="NegLevel" type="TextureButton" parent="."]
 process_mode = 3
@@ -104,20 +68,32 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Character" type="Label" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -6
 layout_mode = 0
-offset_left = 32.5809
-offset_top = 17.1323
-offset_right = 36.5809
-offset_bottom = 26.1323
-theme_override_fonts/font = ExtResource("4_m6dxm")
-theme_override_font_sizes/font_size = 2
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_top = 14.0
+offset_right = 24.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.726732, 0.726732, 0.726732, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 8.69978
+offset_top = 26.6844
+offset_right = 12.6998
+offset_bottom = 39.6844
+mouse_filter = 2
+color = Color(0.169245, 0.169245, 0.169245, 1)
 
 [connection signal="pressed" from="play button" to="." method="play_button_pressed"]
-[connection signal="pressed" from="NegCharacter" to="." method="neg_button_character"]
-[connection signal="pressed" from="PosCharacter" to="." method="pos_button_character"]
 [connection signal="pressed" from="NegLevel" to="." method="neg_button_level"]
 [connection signal="pressed" from="PosLevel" to="." method="pos_button_level"]

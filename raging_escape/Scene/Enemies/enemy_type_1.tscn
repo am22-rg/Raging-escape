@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cjspudvdman3c" path="res://Script/Enemytypes/enemy_type_1.gd" id="1_0i62g"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_0i62g"]
-radius = 13.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0i62g"]
+size = Vector2(24, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g34os"]
 size = Vector2(28, 27)
@@ -24,7 +24,8 @@ offset_right = 13.0
 offset_bottom = 13.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_0i62g")
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_0i62g")
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 1.5

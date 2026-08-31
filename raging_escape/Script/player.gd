@@ -109,14 +109,6 @@ func _on_const_timer_timeout():
 	update_health(health_regen)
 
 
-func take_damage(damage):
-	if health >= 1:
-		update_health(damage)
-	else:
-		pass
-		# TODO Menu - make a you died menu
-
-
 func update_health(change):
 	if health >= 1:
 		health += change
@@ -131,8 +123,8 @@ func update_health(change):
 		
 		health_bar_ui.value = health
 	else:
-		pass
-		# TODO Menu - make a you died menu
+		SignalManager.to_menu.emit()
+		SignalManager.died.emit()
 
 
 func _on_attack_box_body_entered(body: Node2D):

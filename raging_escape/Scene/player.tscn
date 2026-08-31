@@ -19,6 +19,7 @@ scale = Vector2(0.882785, 0.880553)
 script = ExtResource("1_kelma")
 my_curve = SubResource("Curve_kelma")
 attack_box = NodePath("AttackBox")
+max_dashes = 2
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -11.0
@@ -47,10 +48,6 @@ shape = SubResource("RectangleShape2D_kelma")
 wait_time = 2.0
 autostart = true
 
-[node name="DashTimer" type="Timer" parent="."]
-wait_time = 1.2
-
 [connection signal="body_entered" from="AttackBox" to="." method="_on_attack_box_body_entered"]
 [connection signal="body_exited" from="AttackBox" to="." method="_on_attack_box_body_exited"]
 [connection signal="timeout" from="ConstantTimer" to="." method="_on_const_timer_timeout"]
-[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]

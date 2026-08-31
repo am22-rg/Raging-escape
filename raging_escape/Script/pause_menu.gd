@@ -26,12 +26,11 @@ func _on_play_pressed() -> void:
 	# Emits a signal that the game is playing
 	print("emitted")
 	SignalManager.play_game.emit() 
-	
 
 
 func _on_menu_pressed() -> void:
 	SignalManager.to_menu.emit()
 
 
-func _on_to_menu_pressed() -> void:
-	pass
+func _on_reset_pressed() -> void:
+	SignalManager.reset.emit()

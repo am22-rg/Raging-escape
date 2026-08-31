@@ -1,8 +1,6 @@
 extends Control
 
-signal pause_game
-signal unpause_game
-
+signal send_level
 
 var levels = {
 	1: preload("res://Scene/Levels/level_1.tscn"),
@@ -50,6 +48,16 @@ func load_level_id(id):
 
 func level_select():
 	self.show()
+	
+	# Send current level to the game engine
+	var level_number := -1
+	
+	for key in levels:
+		if levels[key] == current_level:
+			level_number = key
+
+	send_level.emit(level_number)
+	
 	if is_instance_valid(level_node): # Get rid of current scene
 		level_node.queue_free()
 

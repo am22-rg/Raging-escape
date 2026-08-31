@@ -1,14 +1,19 @@
 extends Node2D
 
+# Varibles for corruption
 var multi_power: int = 2
 var corruption_val: float = 0
 
 var noise := FastNoiseLite.new()
 var noise_time: float = 0.0
 
+# Varible for the stopwatch
 var start_time = Time.get_ticks_msec()
 
+# Varible that plays when a level first opens
 var first_play: bool = true
+
+var current_level: int = 0
 
 @onready var label: Label = $CanvasLayer/GameUI/Label
 @onready var menu_ui: Control = $CanvasLayer/Menu
@@ -32,9 +37,14 @@ func _ready() -> void:
 	
 	# Get a connection to the signal manager for screen shake 
 	SignalManager.corruption_sig.connect(update_corruption)
+	
 	SignalManager.play_game.connect(_game_running)
 	SignalManager.pause_game.connect(_game_puased)
+	
+	SignalManager.reset.connect(_reset_level)
 	SignalManager.to_menu.connect(_to_menu)
+	
+	menu_ui.send_level.connect(_get_current_level) # Gets the current level
 
 
 func _to_menu():
@@ -58,8 +68,7 @@ func _to_menu():
 	menu_ui.mouse_filter = Control.MOUSE_FILTER_STOP
 	pause_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
-	# Reset the stopwatch to 0
-	start_time = Time.get_ticks_msec()
+	_reset_timer()
 
 
 func _game_puased():
@@ -86,15 +95,9 @@ func _game_running():
 	menu_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _process(delta):
-	# Get the elapsed time
-	var elapsed = Time.get_ticks_msec() - start_time
-	
-	# Make and update all the values for the label
-	var mins = elapsed / 60000
-	var secs = (elapsed / 1000) % 60
-	var mili_secs = (elapsed % 1000) / 10
-	label.text = "%02d : %02d : %02d" % [mins, secs, mili_secs]
-	
+	# Send the reset signal when R is pressed
+	if Input.is_action_just_pressed("Reset"):
+		SignalManager.reset.emit()
 	
 	# Make camera shake 
 	if corruption_val > 0:
@@ -112,11 +115,35 @@ func _process(delta):
 		# Otherwise no offset
 		camera.offset = Vector2.ZERO
 	
-	if Input.is_action_just_pressed("Reset"):
-		_game_puased()
-		menu_ui.level_select()
-		menu_ui.show()
+	# Get the elapsed time
+	var elapsed = Time.get_ticks_msec() - start_time
+	
+	# Make and update all the values for the label
+	var mins = elapsed / 60000
+	var secs = (elapsed / 1000) % 60
+	var mili_secs = (elapsed % 1000) / 10
+	label.text = "%02d : %02d : %02d" % [mins, secs, mili_secs]
 
 
+# Resets the level so by deleting and loading the level 
+func _reset_level():
+	_game_puased()
+	_reset_timer()
+	
+	menu_ui.level_select()
+	menu_ui.load_level_id(current_level)
+
+
+# connected signal to get the current level number
+func _get_current_level(level):
+	current_level = level
+
+
+# Reset the stopwatch to 0
+func _reset_timer():
+	start_time = Time.get_ticks_msec()
+
+
+# Connected signal to update the corruption
 func update_corruption(corruption):
 	corruption_val = corruption

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bvrysobqqtxaj" path="res://Assets/Screenshot_2026-06-19_at_10.32.29_AM-removebg-preview.png" id="2_20xco"]
 [ext_resource type="FontFile" uid="uid://d2ru7amkj4na" path="res://Assets/Black_Ops_One/BlackOpsOne-Regular.ttf" id="4_m6dxm"]
 
-[node name="Menu" type="Control" node_paths=PackedStringArray("level_label", "character_label")]
+[node name="Menu" type="Control" node_paths=PackedStringArray("level_label")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -12,7 +12,6 @@ offset_bottom = 40.0
 scale = Vector2(28.8513, 16.2267)
 script = ExtResource("1_0ve60")
 level_label = NodePath("Level")
-character_label = NodePath("")
 
 [node name="PlayButton" type="Button" parent="."]
 process_mode = 3

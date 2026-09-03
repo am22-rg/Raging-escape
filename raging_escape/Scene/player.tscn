@@ -1,11 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtsakxrrdy581"]
+[gd_scene load_steps=7 format=3 uid="uid://dtsakxrrdy581"]
 
 [ext_resource type="Script" uid="uid://dfegyj5qd4mv6" path="res://Script/player.gd" id="1_kelma"]
 
 [sub_resource type="Curve" id="Curve_kelma"]
-_limits = [0.0, 5.0, 0.0, 1.0]
-_data = [Vector2(0, 1), 0.496972, 1.03551, 0, 0, Vector2(0.35514, 1.27725), 2.48987, 2.48987, 0, 0, Vector2(0.654206, 2.14031), 4.41062, 4.41062, 0, 0, Vector2(0.836449, 3.44134), 8.62334, 8.62334, 0, 0, Vector2(1, 5), 9.83449, 4.64845, 0, 0]
-point_count = 5
+_limits = [1.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.130949, 0, 0, Vector2(1, 3), 4.82412, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_y8w33"]
+_limits = [1.00119, 4.0, 0.0, 1.0]
+_data = [Vector2(0, 1.00119), 0.0, 1.15751, 0, 0, Vector2(1e-05, 1.00119), 0.0, 0.0, 0, 0, Vector2(0.530374, 1.62044), 1.83703, 1.83703, 0, 0, Vector2(0.780374, 2.47029), 6.09665, 6.09665, 0, 0, Vector2(0.915888, 3.83003), 5.97035, 5.97035, 0, 0, Vector2(1, 4), 0.170446, 0.0, 0, 0]
+point_count = 6
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y8w33"]
 
@@ -17,7 +22,8 @@ size = Vector2(7.9558, 11.958)
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box")]
 scale = Vector2(0.882785, 0.880553)
 script = ExtResource("1_kelma")
-my_curve = SubResource("Curve_kelma")
+damage_curve = SubResource("Curve_kelma")
+speed_curve = SubResource("Curve_y8w33")
 attack_box = NodePath("AttackBox")
 max_dashes = 2
 

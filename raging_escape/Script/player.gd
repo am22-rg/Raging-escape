@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var health: float = 12
+var health: float = max_health
 var health_regen := 0.5
 var enemys_in_range := []
 var attack_damage: int = 1
@@ -18,13 +18,18 @@ const RIGHT := 0
 
 const SPEED = 250.0
 const JUMP_VELOCITY = -500.0
+var current_speed: float = 250
 
-@export var my_curve: Curve
+@export var damage_curve: Curve
+@export var speed_curve: Curve
+
 @export var health_bar_ui: ProgressBar
 @export var Corrution_bar_ui: ProgressBar
 @export var ui: Control
+
 @export var attack_box : Area2D
 @export var max_dashes: int 
+@export var max_health: int = 12
 
 
 func _ready() -> void:
@@ -48,6 +53,10 @@ func _play_game():
 
 #TODO Health - add the code for the corruptionbar once corruption signal exists
 func _physics_process(delta: float) -> void:
+	# Get current speed
+	var speed_multiplier := speed_curve.sample(corruption_val)
+	var current_speed := SPEED * speed_multiplier
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -61,7 +70,7 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("Left", "Right")
 	
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * current_speed
 		
 		# lets the player dash then addeds a cool down
 		if Input.is_action_just_pressed("Dash"):
@@ -71,12 +80,13 @@ func _physics_process(delta: float) -> void:
 				velocity -= hang_time * get_gravity() * delta
 				print(velocity.y)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, current_speed)
 	
 	if velocity.x > 0:
 		attack_box.rotation = RIGHT
 	elif velocity.x < 0:
 		attack_box.rotation = LEFT
+	
 	
 	move_and_slide()
 
@@ -93,8 +103,8 @@ func _process(_delta: float) -> void:
 
 # Made a curve for multiplying damage to deal to enemy based on corruption
 func damage_multiplier():
-	var curve_multiplier := my_curve.sample(corruption_val)
-	var multiplied_damage := attack_damage * curve_multiplier
+	var damage_multiplier := damage_curve.sample(corruption_val)
+	var multiplied_damage := attack_damage * damage_multiplier
 	
 	for enemy in enemys_in_range:
 		enemy.take_damage(multiplied_damage)
@@ -103,8 +113,6 @@ func damage_multiplier():
 func _corruption(corruption):
 	# Update the corruption value
 	corruption_val = corruption
-	
-	print(corruption_val)
 	
 	# Make sure corruption is not more than 1 or less than 0
 	if corruption_val < 0:
@@ -119,7 +127,7 @@ func _corruption(corruption):
 
 
 func _on_const_timer_timeout():
-	_corruption(corruption_val - corruption_equaliser)
+	SignalManager.corruption_sig.emit(corruption_val - corruption_equaliser)
 	update_health(health_regen)
 
 

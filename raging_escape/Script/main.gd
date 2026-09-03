@@ -25,7 +25,7 @@ var current_level: int = 0
 @onready var camera: Camera2D = $Camera2D
 
 @export var shake_speed: float = 4
-@export var corruption_multiplier := 5
+@export var corruption_multiplier := 4.2
 @export var max_offset: Vector2 = Vector2(5, 3)
 
 
@@ -58,6 +58,7 @@ func _player_died():
 	
 	player.health = 12
 
+
 func _to_menu():
 	
 	# Pause game engine
@@ -72,7 +73,6 @@ func _to_menu():
 	player.hide()
 	
 	# Remove the current level
-	# TODO redundent/can remove once the backround for menu ui is there
 	menu_ui.level_select()
 	
 	# Make sure that only the menu ui is taking input
@@ -90,6 +90,7 @@ func _game_puased():
 	# When the puase menu is open the menu doesn't take input
 	pause_ui.mouse_filter = Control.MOUSE_FILTER_STOP
 
+
 func _game_running():
 	# Pause the game engine
 	get_tree().paused = false
@@ -101,6 +102,7 @@ func _game_running():
 	
 	# When the game is running the ui doesn't take input
 	menu_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
 
 func _process(delta):
 	# Send the reset signal when R is pressed
@@ -135,11 +137,16 @@ func _process(delta):
 
 # Resets the level so by deleting and loading the level 
 func _reset_level():
+	# Pause game and reset the stopwatch
 	_game_puased()
 	_reset_timer()
 	
+	SignalManager.corruption_sig.emit(0)
+	player.health = player.max_health
+	
 	menu_ui.level_select()
 	menu_ui.load_level_id(current_level)
+
 
 # connected signal to get the current level number
 func _get_current_level(level):

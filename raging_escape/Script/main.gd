@@ -4,6 +4,7 @@ extends Node2D
 var multi_power: int = 2
 var corruption_val: float = 0
 
+
 var noise := FastNoiseLite.new()
 var noise_time: float = 0.0
 
@@ -37,7 +38,7 @@ func _ready() -> void:
 	noise.frequency = 0.5
 	
 	# Get a connection to the signal manager for screen shake 
-	SignalManager.corruption_sig.connect(update_corruption)
+	SignalManager.corruption_sig.connect(_update_corruption)
 	
 	SignalManager.play_game.connect(_game_running)
 	SignalManager.pause_game.connect(_game_puased)
@@ -58,7 +59,6 @@ func _player_died():
 	player.health = 12
 
 func _to_menu():
-	first_play = true
 	
 	# Pause game engine
 	get_tree().paused = true
@@ -86,10 +86,6 @@ func _game_puased():
 	get_tree().paused = true
 	pause_ui.show()
 	
-	if first_play == true:
-		first_play = false
-		
-		camera.position = Vector2.ZERO
 	
 	# When the puase menu is open the menu doesn't take input
 	pause_ui.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -97,6 +93,7 @@ func _game_puased():
 func _game_running():
 	# Pause the game engine
 	get_tree().paused = false
+	
 	
 	# Hide the ui for menu and pause
 	menu_ui.hide()
@@ -144,7 +141,6 @@ func _reset_level():
 	menu_ui.level_select()
 	menu_ui.load_level_id(current_level)
 
-
 # connected signal to get the current level number
 func _get_current_level(level):
 	current_level = level
@@ -156,5 +152,5 @@ func _reset_timer():
 
 
 # Connected signal to update the corruption
-func update_corruption(corruption):
+func _update_corruption(corruption):
 	corruption_val = corruption

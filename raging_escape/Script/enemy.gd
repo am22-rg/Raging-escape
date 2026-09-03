@@ -97,5 +97,5 @@ func take_damage(damage):
 
 func die():
 	var corruption = randf_range(0.1, 0.25)
-	player.corruption(corruption)
+	player._corruption(player.corruption_val + corruption)
 	queue_free()

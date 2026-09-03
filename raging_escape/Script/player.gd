@@ -4,11 +4,14 @@ var health: float = 12
 var health_regen := 0.5
 var enemys_in_range := []
 var attack_damage: int = 1
+
 var dash: int = 3000
 var dashes: int = max_dashes
 var hang_time := 0.7
+
 var corruption_val: float = 0
-var corruption_equaliser := -0.01
+var corruption_equaliser := 0.05
+var corruption_release: float = 0.15
 
 const LEFT := -PI
 const RIGHT := 0
@@ -28,7 +31,7 @@ func _ready() -> void:
 	self.hide()
 	
 	# Connects SignalManager signals needed
-	SignalManager.corruption_sig.connect(damage_multiplier)
+	SignalManager.corruption_sig.connect(_corruption)
 	SignalManager.pause_game.connect(_pause_game)
 	SignalManager.play_game.connect(_play_game)
 
@@ -80,8 +83,12 @@ func _physics_process(delta: float) -> void:
 
 # TODO add knock back on hit
 func _process(_delta: float) -> void:
+	
 	if Input.is_action_just_pressed("Attack"):
 		damage_multiplier()
+	
+	if Input.is_action_just_pressed("Release"):
+		SignalManager.corruption_sig.emit(corruption_val - corruption_release)
 
 
 # Made a curve for multiplying damage to deal to enemy based on corruption
@@ -93,19 +100,26 @@ func damage_multiplier():
 		enemy.take_damage(multiplied_damage)
 
 
-func corruption(corruption_add):
-	corruption_val += corruption_add
+func _corruption(corruption):
+	# Update the corruption value
+	corruption_val = corruption
+	
+	print(corruption_val)
+	
+	# Make sure corruption is not more than 1 or less than 0
 	if corruption_val < 0:
 		corruption_val = 0
+		SignalManager.corruption_sig.emit(corruption_val)
+	
 	elif corruption_val > 1:
 		corruption_val = 1
-	
+		SignalManager.corruption_sig.emit(corruption_val)
+
 	Corrution_bar_ui.value = corruption_val
-	SignalManager.corruption_sig.emit(corruption_val)
 
 
 func _on_const_timer_timeout():
-	corruption(corruption_equaliser)
+	_corruption(corruption_val - corruption_equaliser)
 	update_health(health_regen)
 
 

@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://db8xts6uww2qg"]
+[gd_scene load_steps=4 format=3 uid="uid://db8xts6uww2qg"]
 
 [ext_resource type="Script" uid="uid://ujnksgvjg4ly" path="res://Script/menu.gd" id="1_0ve60"]
 [ext_resource type="Texture2D" uid="uid://bvrysobqqtxaj" path="res://Assets/Screenshot_2026-06-19_at_10.32.29_AM-removebg-preview.png" id="2_20xco"]
-[ext_resource type="Texture2D" uid="uid://6ryyfmk7k3rb" path="res://Assets/Screenshot 2025-09-17 at 12.49.30 PM.png" id="3_l7dqm"]
 [ext_resource type="FontFile" uid="uid://d2ru7amkj4na" path="res://Assets/Black_Ops_One/BlackOpsOne-Regular.ttf" id="4_m6dxm"]
 
 [node name="Menu" type="Control" node_paths=PackedStringArray("level_label", "character_label")]
@@ -15,15 +14,17 @@ script = ExtResource("1_0ve60")
 level_label = NodePath("Level")
 character_label = NodePath("")
 
-[node name="play button" type="TextureButton" parent="."]
+[node name="PlayButton" type="Button" parent="."]
 process_mode = 3
 layout_mode = 0
-offset_left = 13.3789
-offset_top = 19.4741
-offset_right = 37.3789
-offset_bottom = 41.4741
-scale = Vector2(0.546409, 0.298505)
-texture_normal = ExtResource("3_l7dqm")
+offset_left = 13.0
+offset_top = 19.0
+offset_right = 54.0
+offset_bottom = 50.0
+scale = Vector2(0.298168, 0.266505)
+theme_override_fonts/font = ExtResource("4_m6dxm")
+text = "Play"
+metadata/_edit_group_ = true
 
 [node name="NegLevel" type="TextureButton" parent="."]
 process_mode = 3
@@ -94,6 +95,6 @@ offset_bottom = 39.6844
 mouse_filter = 2
 color = Color(0.169245, 0.169245, 0.169245, 1)
 
-[connection signal="pressed" from="play button" to="." method="play_button_pressed"]
+[connection signal="pressed" from="PlayButton" to="." method="play_button_pressed"]
 [connection signal="pressed" from="NegLevel" to="." method="neg_button_level"]
 [connection signal="pressed" from="PosLevel" to="." method="pos_button_level"]

@@ -3,8 +3,8 @@ extends CharacterBody2D
 
 @onready var attack_area = $AttackArea
 @onready var move_range = $MoveRange
-@onready var player = $"."
 
+@export var player: CharacterBody2D
 @export var timer_attack: Timer
 
 @export var max_health: int = 0
@@ -29,14 +29,14 @@ func _ready():
 	
 	timer_attack.timeout.connect(_on_attack_timer_timeout)
 	
-	SignalManager.pause_game.connect(pause_game)
-	SignalManager.play_game.connect(play_game)
+	SignalManager.pause_game.connect(_pause_game)
+	SignalManager.play_game.connect(_play_game)
 
 
-func pause_game():
+func _pause_game():
 	self.hide()
 
-func play_game():
+func _play_game():
 	self.show()
 
 func _physics_process(delta):
@@ -92,10 +92,10 @@ func _on_attack_area_exited(area):
 func take_damage(damage):
 	health -= damage
 	if health <= 0:
-		die()
+		_die()
 
 
-func die():
+func _die():
 	var corruption = randf_range(0.1, 0.25)
 	SignalManager.corruption_sig.emit(player.corruption_val + corruption)
 	queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d34a2va2xf8ux"]
+[gd_scene load_steps=12 format=3 uid="uid://d34a2va2xf8ux"]
 
 [ext_resource type="Script" uid="uid://doenp6i411ykb" path="res://Script/main.gd" id="1_2wwxx"]
 [ext_resource type="PackedScene" uid="uid://dtsakxrrdy581" path="res://Scene/player.tscn" id="1_f6udf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://6gc3w35g5y3c" path="res://Script/game_ui.gd" id="4_2wwxx"]
 [ext_resource type="FontFile" uid="uid://d2ru7amkj4na" path="res://Assets/Black_Ops_One/BlackOpsOne-Regular.ttf" id="5_3amdw"]
 [ext_resource type="PackedScene" uid="uid://bylhrvge2532a" path="res://Scene/pause_menu.tscn" id="6_1xcnr"]
+[ext_resource type="PackedScene" uid="uid://dwybc5eaknq23" path="res://Scene/kill_zone.tscn" id="7_ow1sv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sblpm"]
 bg_color = Color(0.168627, 0.0705882, 0.0784314, 1)
@@ -121,6 +122,10 @@ process_mode = 3
 
 [node name="LevelTimer" type="Timer" parent="."]
 process_callback = 0
+
+[node name="KillZone" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_ow1sv")]
+position = Vector2(-1, 652)
+player = NodePath("../Player")
 
 [connection signal="pressed" from="CanvasLayer/GameUI/Pause" to="CanvasLayer/GameUI" method="_on_pause_pressed"]
 [connection signal="timeout" from="LevelTimer" to="." method="_on_level_timer_timeout"]

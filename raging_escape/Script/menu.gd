@@ -13,6 +13,7 @@ var levels = {
 @export var character_label: Label
 @export var player: CharacterBody2D
 
+@onready var tutorial_menu: Control = $TutorialMenu
 @onready var level_container: Node2D = $"../../Level Container"
 
 var current_level: PackedScene = levels[1] # Current level to check which scene is running
@@ -24,6 +25,7 @@ var character_skins: int = 1
 # Show the menu at the start of the game
 func _ready():
 	self.show()
+	tutorial_menu.hide()
 
 
 # Open the correct level
@@ -81,3 +83,11 @@ func pos_button_level():
 	if level < levels.size():
 		level += 1
 		level_label.text = str(level)
+
+
+func _on_tutorial_button_up() -> void:
+	tutorial_menu.hide()
+
+
+func _on_tutorial_button_down() -> void:
+	tutorial_menu.show()

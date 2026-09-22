@@ -25,6 +25,27 @@ theme_override_fonts/font = ExtResource("4_m6dxm")
 text = "Play"
 metadata/_edit_group_ = true
 
+[node name="TutorialButton" type="Button" parent="."]
+process_mode = 3
+z_index = 3
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.41399
+offset_top = -5.11922
+offset_right = 32.586
+offset_bottom = 11.8808
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.141211, 0.250523)
+theme_override_fonts/font = ExtResource("4_m6dxm")
+theme_override_font_sizes/font_size = 7
+text = "Tutorial"
+metadata/_edit_group_ = true
+
 [node name="NegLevel" type="TextureButton" parent="."]
 process_mode = 3
 layout_mode = 2
@@ -94,6 +115,88 @@ offset_bottom = 39.6844
 mouse_filter = 2
 color = Color(0.169245, 0.169245, 0.169245, 1)
 
+[node name="TutorialMenu" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="TutorialMenu"]
+modulate = Color(0.64, 0.0704, 0.0704, 1)
+z_index = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TutorialMenu"]
+z_index = 2
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TutorialMenu/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialMenu/HBoxContainer/MarginContainer"]
+z_index = 2
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="TutorialMenu/HBoxContainer/MarginContainer/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_m6dxm")
+theme_override_font_sizes/font_size = 3
+text = "Controls"
+
+[node name="Label2" type="Label" parent="TutorialMenu/HBoxContainer/MarginContainer/VBoxContainer"]
+z_index = 2
+layout_mode = 2
+theme_override_constants/line_spacing = 2
+theme_override_fonts/font = ExtResource("4_m6dxm")
+theme_override_font_sizes/font_size = 1
+text = "Movement - WASD, Arrow Keys
+Attack - Mouse
+Dash - Shift
+Jump - Space, Up arrow, and W
+"
+
+[node name="MarginContainer2" type="MarginContainer" parent="TutorialMenu/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TutorialMenu/HBoxContainer/MarginContainer2"]
+z_index = 2
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="TutorialMenu/HBoxContainer/MarginContainer2/VBoxContainer2"]
+z_index = 2
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_m6dxm")
+theme_override_font_sizes/font_size = 3
+text = "Goals"
+
+[node name="Label2" type="Label" parent="TutorialMenu/HBoxContainer/MarginContainer2/VBoxContainer2"]
+z_index = 2
+layout_mode = 2
+theme_override_constants/line_spacing = 2
+theme_override_fonts/font = ExtResource("4_m6dxm")
+theme_override_font_sizes/font_size = 1
+text = "You are a prisoner.
+Your mission is to escape
+the clutches of the oppressor.
+escape the prison as fast
+as possible to gain your 
+freedom...
+"
+
 [connection signal="pressed" from="PlayButton" to="." method="play_button_pressed"]
+[connection signal="button_down" from="TutorialButton" to="." method="_on_tutorial_button_down"]
+[connection signal="button_up" from="TutorialButton" to="." method="_on_tutorial_button_up"]
 [connection signal="pressed" from="NegLevel" to="." method="neg_button_level"]
 [connection signal="pressed" from="PosLevel" to="." method="pos_button_level"]

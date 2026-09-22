@@ -23,39 +23,30 @@ tile_set = SubResource("TileSet_cfqvl")
 [node name="Enemys" type="Node" parent="."]
 
 [node name="Enemy_Type_2" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(-99, -645)
 max_health = 100
 damage = -3
 
 [node name="Enemy_Type_4" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(-224, -19)
 
 [node name="Enemy_Type_5" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(-173, -27)
 
 [node name="Enemy_Type_6" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(-137, -17)
 
 [node name="Enemy_Type_7" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(-86, -25)
 
 [node name="Enemy_Type_8" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(-252, -69)
 
 [node name="Enemy_Type_9" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(-201, -77)
 
 [node name="Enemy_Type_10" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(57, -19)
 
 [node name="Enemy_Type_11" parent="Enemys" instance=ExtResource("2_l42e6")]
-visible = false
 position = Vector2(108, -18)

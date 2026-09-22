@@ -69,6 +69,7 @@ func _physics_process(delta: float) -> void:
 	
 	var direction := Input.get_axis("Left", "Right")
 	
+	# When the player is moving
 	if direction:
 		velocity.x = direction * current_speed
 		
@@ -135,13 +136,9 @@ func update_health(change):
 	if health >= 1:
 		health += change
 		
-		print(health)
-		
 		# To insure health cannot excede the limit
-		if health >= 12:
-			health = 12
-		
-		print(health)
+		if health >= max_health:
+			health = max_health
 		
 		health_bar_ui.value = health
 	else:

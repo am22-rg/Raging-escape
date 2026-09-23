@@ -9,8 +9,8 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_y8w33"]
 _limits = [1.00119, 4.0, 0.0, 1.0]
-_data = [Vector2(0, 1.00119), 0.0, 1.15751, 0, 0, Vector2(1e-05, 1.00119), 0.0, 0.0, 0, 0, Vector2(0.530374, 1.62044), 1.83703, 1.83703, 0, 0, Vector2(0.780374, 2.47029), 6.09665, 6.09665, 0, 0, Vector2(0.915888, 3.83003), 5.97035, 5.97035, 0, 0, Vector2(1, 4), 0.170446, 0.0, 0, 0]
-point_count = 6
+_data = [Vector2(0, 1.00119), 0.0, 1.15751, 0, 0, Vector2(1e-05, 1.00119), 0.0, 0.0, 0, 0, Vector2(0.502336, 1.59727), 2.21953, 2.21953, 0, 0, Vector2(1, 1.99901), 0.170446, 2.36187, 0, 0]
+point_count = 4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y8w33"]
 

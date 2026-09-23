@@ -10,14 +10,16 @@ extends CharacterBody2D
 @export var max_health: int = 0
 @export var damage: int = 1
 
-@export var direction = true
 @export var speed := 100
 
 var move := false
 var health: int
 var can_attack: bool = true
 var in_range: bool = false
+var direction: float = 0
 
+var knockback_power: int = 200
+var knockup_power: int = -70
 
 func _ready():
 	self.hide()
@@ -36,18 +38,21 @@ func _ready():
 func _pause_game():
 	self.hide()
 
+
 func _play_game():
 	self.show()
+
 
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
 	if not player == null and move == true:
-		var direction := signi(player.global_position.x - global_position.x)
-		velocity.x = direction * speed
+		direction = signi(player.global_position.x - global_position.x)
+		velocity.x = lerp(velocity.x, direction * speed, 0.05) 
 	else:
 		velocity.x = 0
+	
 	move_and_slide()
 
 
@@ -61,6 +66,7 @@ func _on_move_range_entered(area):
 	if area.is_in_group("player"):
 		player = area.get_parent()
 		move = true
+
 
 func _on_attack_timer_timeout():
 	can_attack = true
@@ -91,6 +97,10 @@ func _on_attack_area_exited(area):
 # TODO - Add direction and knockback
 func take_damage(damage):
 	health -= damage
+	
+	velocity.x = knockback_power * -direction * damage
+	velocity.y = knockup_power
+	
 	if health <= 0:
 		_die()
 

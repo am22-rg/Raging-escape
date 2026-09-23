@@ -121,7 +121,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ColorRect" type="ColorRect" parent="TutorialMenu"]
-modulate = Color(0.64, 0.0704, 0.0704, 1)
+modulate = Color(0.64, 0.0704, 0.0704, 0.937255)
 z_index = 1
 layout_mode = 0
 offset_right = 40.0

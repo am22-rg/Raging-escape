@@ -22,10 +22,11 @@ size = Vector2(7.9558, 11.958)
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box")]
 scale = Vector2(0.882785, 0.880553)
 script = ExtResource("1_kelma")
+attack_box = NodePath("AttackBox")
+max_dashes = 1
+max_coyote_time = 0.17
 damage_curve = SubResource("Curve_kelma")
 speed_curve = SubResource("Curve_y8w33")
-attack_box = NodePath("AttackBox")
-max_dashes = 2
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -11.0

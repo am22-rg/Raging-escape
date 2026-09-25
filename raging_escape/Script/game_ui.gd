@@ -2,12 +2,18 @@ extends Control
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _ready():
 	self.hide()
 	
 	# Connect the signal manager signals for play and pause
 	SignalManager.pause_game.connect(_game_paused)
 	SignalManager.play_game.connect(_game_playing)
+
+
+#region Puase & Play System
+# When the pause button is pressed send global signal
+func _on_pause_pressed() -> void:
+	SignalManager.pause_game.emit()
 
 
 # Hide self when the game is playing again
@@ -18,7 +24,4 @@ func _game_playing():
 # Show self when the game is puased
 func _game_paused():
 	self.hide()
-
-
-func _on_pause_pressed() -> void:
-	SignalManager.pause_game.emit()
+#endregion

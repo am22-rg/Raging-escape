@@ -2,25 +2,26 @@ extends Control
 
 signal send_level
 
-var levels = {
+# External varibles
+@export var player: CharacterBody2D
+@export var tutorial_menu: Control 
+
+#region Level Var System
+var level_dict = {
 	1: preload("res://Scene/Levels/level_1.tscn"),
 	2: preload("res://Scene/Levels/level_2.tscn"),
 	3: preload("res://Scene/Levels/level_3.tscn"),
 	4: preload("res://Scene/Levels/level_4.tscn"),
 }
 
-@export var level_label: Label
-@export var character_label: Label
-@export var player: CharacterBody2D
-
-@onready var tutorial_menu: Control = $TutorialMenu
-@onready var level_container: Node2D = $"../../Level Container"
-
-var current_level: PackedScene = levels[1] # Current level to check which scene is running
+# Current level to check which scene is running
+var current_level: PackedScene = level_dict[1]
 var level_node: Node = null
 var level: int = 1
-var character: int = 1
-var character_skins: int = 1
+
+@export var level_label: Label
+@export var level_container: Node2D 
+#endregion
 
 # Show the menu at the start of the game
 func _ready():
@@ -36,18 +37,20 @@ func play_button_pressed():
 # Change level
 func load_level_id(id):
 	self.show()
-	if levels.has(id): # Load new scene
+	
+	# Load new scene
+	if level_dict.has(id):
 		# Make sure the level node is empty
 		level_select()
 		
 		# Instance the level and add it to the level node
-		var scene_instance = levels[id].instantiate()
+		var scene_instance = level_dict[id].instantiate()
 		level_container.add_child(scene_instance)
 		level_node = scene_instance
-		current_level = levels[id]
+		current_level = level_dict[id]
 		
 		# Make sure the player will spawn in the correct position
-		player.global_position = Vector2(0, 0)
+		player.global_position = Vector2.ZERO
 		
 		# Start running the game
 		SignalManager.play_game.emit()
@@ -58,12 +61,12 @@ func load_level_id(id):
 func level_select():
 	self.show()
 	
-	# Send current level to the game engine
+	# Make a current level number that is false
 	var level_number := -1
 	
 	# Find the current level number
-	for key in levels:
-		if levels[key] == current_level:
+	for key in level_dict:
+		if level_dict[key] == current_level:
 			level_number = key
 	
 	# Send to the game engine
@@ -73,6 +76,7 @@ func level_select():
 		level_node.queue_free()
 
 
+#region Level Buttons
 func neg_button_level():
 	if level > 1:
 		level -= 1
@@ -80,14 +84,17 @@ func neg_button_level():
 
 
 func pos_button_level():
-	if level < levels.size():
+	if level < level_dict.size():
 		level += 1
 		level_label.text = str(level)
+#endregion
 
 
+#region Tutorial Buttons
 func _on_tutorial_button_up() -> void:
 	tutorial_menu.hide()
 
 
 func _on_tutorial_button_down() -> void:
 	tutorial_menu.show()
+#endregion

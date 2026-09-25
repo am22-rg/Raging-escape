@@ -4,22 +4,42 @@
 [ext_resource type="Texture2D" uid="uid://bvrysobqqtxaj" path="res://Assets/Screenshot_2026-06-19_at_10.32.29_AM-removebg-preview.png" id="2_20xco"]
 [ext_resource type="FontFile" uid="uid://d2ru7amkj4na" path="res://Assets/Black_Ops_One/BlackOpsOne-Regular.ttf" id="4_m6dxm"]
 
-[node name="Menu" type="Control" node_paths=PackedStringArray("level_label")]
+[node name="Menu" type="Control" node_paths=PackedStringArray("tutorial_menu", "level_label")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(28.8513, 16.2267)
 script = ExtResource("1_0ve60")
+tutorial_menu = NodePath("TutorialMenu")
 level_label = NodePath("Level")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0281
+offset_top = -17.1652
+offset_right = 11.9719
+offset_bottom = -10.1652
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_m6dxm")
+theme_override_font_sizes/font_size = 3
+text = "Raging Escape"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlayButton" type="Button" parent="."]
 process_mode = 3
 layout_mode = 0
-offset_left = 13.0
-offset_top = 19.0
-offset_right = 54.0
-offset_bottom = 50.0
+offset_left = 25.4085
+offset_top = 11.3583
+offset_right = 70.4085
+offset_bottom = 42.3583
 scale = Vector2(0.298168, 0.266505)
 theme_override_fonts/font = ExtResource("4_m6dxm")
 text = "Play"
@@ -34,9 +54,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -6.41399
+offset_left = -10.9545
 offset_top = -5.11922
-offset_right = 32.586
+offset_right = 28.0455
 offset_bottom = 11.8808
 grow_horizontal = 0
 grow_vertical = 0
@@ -53,36 +73,34 @@ anchor_left = -0.0485246
 anchor_top = -0.0169474
 anchor_right = -0.0485245
 anchor_bottom = -0.0169472
-offset_left = 13.3789
-offset_top = 1.47904
-offset_right = 419.379
-offset_bottom = 403.479
+offset_left = 25.6489
+offset_top = 21.6311
+offset_right = 431.649
+offset_bottom = 423.631
 scale = Vector2(0.0163581, 0.0308013)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("2_20xco")
 flip_h = true
-metadata/_edit_use_anchors_ = true
 
 [node name="PosLevel" type="TextureButton" parent="."]
 process_mode = 3
 layout_mode = 2
-offset_left = 21.1776
-offset_top = 1.23254
-offset_right = 427.178
-offset_bottom = 403.233
+offset_left = 33.4475
+offset_top = 21.3848
+offset_right = 439.448
+offset_bottom = 423.385
 scale = Vector2(0.0180079, 0.0311062)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource("2_20xco")
-metadata/_edit_use_anchors_ = true
 
 [node name="Level" type="Label" parent="."]
 layout_mode = 0
-offset_left = 17.0
-offset_top = 3.0
-offset_right = 23.0
-offset_bottom = 10.0
+offset_left = 29.2698
+offset_top = 23.152
+offset_right = 35.2698
+offset_bottom = 30.152
 theme_override_fonts/font = ExtResource("4_m6dxm")
 theme_override_font_sizes/font_size = 2
 text = "1"
@@ -121,7 +139,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ColorRect" type="ColorRect" parent="TutorialMenu"]
-modulate = Color(0.64, 0.0704, 0.0704, 0.937255)
+modulate = Color(0.64, 0.256, 0.3136, 0.937255)
 z_index = 1
 layout_mode = 0
 offset_right = 40.0
@@ -163,6 +181,8 @@ text = "Movement - WASD, Arrow Keys
 Attack - Mouse
 Dash - Shift
 Jump - Space, Up arrow, and W
+Reset - R button
+
 "
 
 [node name="MarginContainer2" type="MarginContainer" parent="TutorialMenu/HBoxContainer"]

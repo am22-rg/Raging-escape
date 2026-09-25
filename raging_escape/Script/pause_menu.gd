@@ -2,6 +2,7 @@ extends Control
 
 @export var menu_ui: Control
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.hide()
@@ -11,6 +12,7 @@ func _ready() -> void:
 	SignalManager.play_game.connect(_game_paused)
 
 
+#region Pause & Play System
 # Hide self when the game is playing again
 func _game_running():
 	self.hide()
@@ -19,9 +21,10 @@ func _game_running():
 # Show self when the game is puased
 func _game_paused():
 	self.show()
+#endregion
 
 
-# Play button pressed
+#region Buttons System
 func _on_play_pressed() -> void:
 	# Emits a signal that the game is playing
 	print("emitted")
@@ -29,8 +32,11 @@ func _on_play_pressed() -> void:
 
 
 func _on_menu_pressed() -> void:
+	# Emits signal to go to menu
 	SignalManager.to_menu.emit()
 
 
 func _on_reset_pressed() -> void:
+	# Emits signal to go to reset
 	SignalManager.reset.emit()
+#endregion

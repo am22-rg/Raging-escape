@@ -53,7 +53,7 @@ animations = [{
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box", "player_animation")]
-scale = Vector2(0.882785, 0.880553)
+scale = Vector2(1.32191, 1.31857)
 script = ExtResource("1_kelma")
 attack_box = NodePath("AttackBox")
 max_dashes = 2

@@ -33,7 +33,7 @@ shake_speed = 11.0
 max_offset = Vector2(2.5, 1.5)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-scale = Vector2(0.882785, 0.880553)
+scale = Vector2(13.1497, 13.1164)
 zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0

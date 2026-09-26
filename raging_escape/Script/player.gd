@@ -38,10 +38,12 @@ const CORRUPTION_RELEASE: float = 0.15
 const LEFT := -PI
 const RIGHT := 0
 
-const SPEED = 180.0
+const SPEED = 200.0
 const JUMP_VELOCITY = -500.0
 var current_speed: float = 250
 
+var previous_position: Vector2
+var distance_moved = global_position.distance_to(previous_position)
 #endregion
 
 #region Curves
@@ -137,7 +139,8 @@ func _process(_delta: float) -> void:
 
 
 func _player_animation():
-	if velocity.x != 0 and is_on_floor():
+	print(distance_moved)
+	if distance_moved > 0 and is_on_floor():
 		player_animation.play("run")
 	elif not is_on_floor():
 		player_animation.play("jump")

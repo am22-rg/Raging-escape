@@ -1,13 +1,16 @@
 extends CharacterBody2D
 
-#region Health Var Sytem
+#region Health & Damage Var System
+# Health
 const HEALTH_REGEN := 0.5
-
 var player_health: float = 0
+
+@export var max_health: int = 12
+
+# Damage
 var enemys_in_range := []
 
 @export var attack_box : Area2D
-@export var max_health: int = 12
 #endregion
 
 #region Dash & Jump Var System
@@ -17,9 +20,10 @@ var dashes: int = max_dashes
 
 @export var max_dashes: int 
 
-# Coyote time
+# Jump
 var coyote_time: float = 0.0
 
+@export var down_force: float
 @export var max_coyote_time: float 
 #endregion
 
@@ -30,13 +34,14 @@ const CORRUPTION_RELEASE: float = 0.15
 #endregion
 
 #region Movement Var System
-# Handles rotaion of the player
+# Handles rotation of the player
 const LEFT := -PI
 const RIGHT := 0
 
 const SPEED = 180.0
 const JUMP_VELOCITY = -500.0
 var current_speed: float = 250
+
 #endregion
 
 #region Curves
@@ -44,13 +49,15 @@ var current_speed: float = 250
 @export var speed_curve: Curve
 #endregion
 
-#region UI
+#region Exports
 @export var health_bar_ui: ProgressBar
-@export var Corrution_bar_ui: ProgressBar
-@export var ui: Control
+@export var corrution_bar_ui: ProgressBar
+
+@export var player_animation: AnimatedSprite2D
 #endregion
 
 
+#region Built-in Systems
 func _ready() -> void:
 	self.hide()
 	
@@ -62,16 +69,6 @@ func _ready() -> void:
 	SignalManager.pause_game.connect(_pause_game)
 	SignalManager.play_game.connect(_play_game)
 
-func _pause_game():
-	self.hide()
-
-
-func _play_game():
-	self.show()
-	
-	# Set the velocity to zero
-	velocity = Vector2.ZERO
- 
 
 func _physics_process(delta: float) -> void:
 	# Get current speed
@@ -80,6 +77,8 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.
 	if not is_on_floor():
+		if Input.is_action_pressed("Down"):
+			velocity += down_force * get_gravity() * delta
 		velocity += get_gravity() * delta
 		
 		# Timer counts down in the air
@@ -90,7 +89,7 @@ func _physics_process(delta: float) -> void:
 		
 		# Reset the coyote time
 		coyote_time = max_coyote_time
-		
+	
 	# Handle jump.
 	if Input.is_action_just_pressed("Up") and coyote_time > 0:
 		velocity.y = JUMP_VELOCITY
@@ -118,29 +117,37 @@ func _physics_process(delta: float) -> void:
 	# Changing the direction the player is facing when its moving
 	if velocity.x > 0:
 		attack_box.rotation = RIGHT
+		player_animation.flip_h = false
 	elif velocity.x < 0:
 		attack_box.rotation = LEFT
+		player_animation.flip_h = true
 	
+	_player_animation()
 	move_and_slide()
 
 
 func _process(_delta: float) -> void:
-	
+	# If the mouse is clicked try to attack
 	if Input.is_action_just_pressed("Attack"):
 		damage_multiplier()
 	
 	if Input.is_action_just_pressed("Release"):
 		SignalManager.corruption_sig.emit(corruption_val - CORRUPTION_RELEASE)
+#endregion
 
 
-# Made a curve for multiplying damage to deal to enemy based on corruption
-func damage_multiplier():
-	const ATTACK_DAMAGE: int = 1
-	var damage_multiplier := damage_curve.sample(corruption_val)
-	var multiplied_damage := ATTACK_DAMAGE * damage_multiplier
-	
-	for enemy in enemys_in_range:
-		enemy.take_damage(multiplied_damage)
+func _player_animation():
+	if velocity.x != 0 and is_on_floor():
+		player_animation.play("run")
+	elif not is_on_floor():
+		player_animation.play("jump")
+	else:
+		player_animation.play("idle")
+
+
+func _on_const_timer_timeout():
+	SignalManager.corruption_sig.emit(corruption_val - CORRUPTION_EQUALISER)
+	update_health(HEALTH_REGEN)
 
 
 func _corruption(corruption):
@@ -155,13 +162,8 @@ func _corruption(corruption):
 	elif corruption_val > 1:
 		corruption_val = 1
 		SignalManager.corruption_sig.emit(corruption_val)
-
-	Corrution_bar_ui.value = corruption_val
-
-
-func _on_const_timer_timeout():
-	SignalManager.corruption_sig.emit(corruption_val - CORRUPTION_EQUALISER)
-	update_health(HEALTH_REGEN)
+	
+	corrution_bar_ui.value = corruption_val
 
 
 func update_health(change):
@@ -180,11 +182,40 @@ func update_health(change):
 		player_health = max_health
 
 
+#region Attack System
 func _on_attack_box_body_entered(body: Node2D):
-	if body.is_in_group("enemy"):
+	if body.is_in_group("enemy"):  
 		enemys_in_range.append(body)
 
 
 func _on_attack_box_body_exited(body: Node2D):
 	if body.is_in_group("enemy"):
 		enemys_in_range.erase(body)
+
+
+# Made a curve for multiplying damage to deal to enemy based on corruption
+func damage_multiplier():
+	const ATTACK_DAMAGE: int = 1
+	var damage_multiplier := damage_curve.sample(corruption_val)
+	var multiplied_damage := ATTACK_DAMAGE * damage_multiplier
+	
+	# For the enemys in the attack range
+	for enemys in enemys_in_range:
+		# Deal damage to the enemy
+		enemys.take_damage(multiplied_damage)
+#endregion
+
+
+#region Puase & Play System
+# In case I need to use it agian
+func _pause_game():
+	pass
+	#self.hide()
+
+
+func _play_game():
+	self.show()
+	
+	# Set the velocity to zero
+	velocity = Vector2.ZERO
+ #endregion

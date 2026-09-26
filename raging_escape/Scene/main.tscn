@@ -38,10 +38,9 @@ zoom = Vector2(2.5, 2.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 
-[node name="Player" parent="." node_paths=PackedStringArray("health_bar_ui", "Corrution_bar_ui", "ui") instance=ExtResource("1_f6udf")]
+[node name="Player" parent="." node_paths=PackedStringArray("health_bar_ui", "corrution_bar_ui") instance=ExtResource("1_f6udf")]
 health_bar_ui = NodePath("../CanvasLayer/GameUI/Health")
-Corrution_bar_ui = NodePath("../CanvasLayer/GameUI/Corruption")
-ui = NodePath("../CanvasLayer/Menu")
+corrution_bar_ui = NodePath("../CanvasLayer/GameUI/Corruption")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")

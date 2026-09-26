@@ -97,10 +97,10 @@ texture_normal = ExtResource("2_20xco")
 
 [node name="Level" type="Label" parent="."]
 layout_mode = 0
-offset_left = 29.2698
-offset_top = 23.152
-offset_right = 35.2698
-offset_bottom = 30.152
+offset_left = 29.0
+offset_top = 24.0
+offset_right = 36.0
+offset_bottom = 31.0
 theme_override_fonts/font = ExtResource("4_m6dxm")
 theme_override_font_sizes/font_size = 2
 text = "1"
@@ -177,10 +177,11 @@ layout_mode = 2
 theme_override_constants/line_spacing = 2
 theme_override_fonts/font = ExtResource("4_m6dxm")
 theme_override_font_sizes/font_size = 1
-text = "Movement - WASD, Arrow Keys
+text = "Movement - AD, left, right keys
 Attack - Mouse
 Dash - Shift
 Jump - Space, Up arrow, and W
+Down - S, down arrow
 Reset - R button
 
 "

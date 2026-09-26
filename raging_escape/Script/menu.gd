@@ -34,6 +34,7 @@ func play_button_pressed():
 	load_level_id(level)
 
 
+#region Level System
 # Change level
 func load_level_id(id):
 	self.show()
@@ -69,13 +70,16 @@ func level_select():
 		if level_dict[key] == current_level:
 			level_number = key
 	
-	# Send to the game engine
-	send_level.emit(level_number)
-	
-	if is_instance_valid(level_node): # Get rid of current scene
+	# Get rid of current scene
+	if is_instance_valid(level_node):
 		level_node.queue_free()
+	
+	# Send the current level to the game engine
+	return level_number
+#endregion
 
 
+# Buttons for selecting level using a counter
 #region Level Buttons
 func neg_button_level():
 	if level > 1:
@@ -90,6 +94,7 @@ func pos_button_level():
 #endregion
 
 
+# Buttons hold to open or close tutorial screen
 #region Tutorial Buttons
 func _on_tutorial_button_up() -> void:
 	tutorial_menu.hide()

@@ -1,7 +1,6 @@
 class_name Enemy
 extends CharacterBody2D
 
-@export var player: CharacterBody2D
 
 #region Movement Var System
 var move := false
@@ -32,19 +31,27 @@ const KNOCKBACK_POWER: int = 250
 const KNOCKUP_POWER: int = -70
 #endregion
 
+#region Exports
+@export var player: CharacterBody2D
 
+@export var enemy_animation: AnimatedSprite2D
+#endregion 
+
+
+#region Built-in Systems
 func _ready():
 	self.hide()
 	
-	# Make health 12 so the enemy doesn't die on play
+	# Make health max_health 
 	enemy_health = max_health
 	
-	# Connect all the signals
+	# Connect all nodes
 	attack_area.area_entered.connect(_on_attack_area_entered)
 	attack_area.area_exited.connect(_on_attack_area_exited)
 	
 	timer_attack.timeout.connect(_on_attack_timer_timeout)
 	
+	# Connect all the signals
 	SignalManager.pause_game.connect(_pause_game)
 	SignalManager.play_game.connect(_play_game)
 
@@ -65,7 +72,15 @@ func _physics_process(delta):
 	else:
 		velocity.x = 0
 	
+	if direction > 0:
+		enemy_animation.flip_h = false
+	elif direction < 0:
+		enemy_animation.flip_h = true
+	
+	_enemy_animation()
 	move_and_slide()
+#endregion
+
 
 #region Movement System
 # If out of sight makes the enemy stop moving
@@ -80,6 +95,15 @@ func _on_move_range_entered(area):
 	if area.is_in_group("player"):
 		player = area.get_parent()
 		move = true
+
+
+func _enemy_animation():
+	if velocity.x != 0 and is_on_floor():
+		enemy_animation.play("run")
+	elif not is_on_floor():
+		enemy_animation.play("in_air")
+	else:
+		enemy_animation.play("idle")
 #endregion 
 
 
@@ -148,10 +172,12 @@ func _on_attack_timer_timeout():
 
 
 #region Pause & Play System
+# In cuase I need it
 func _pause_game():
-	self.hide()
+	pass
 
 
+#show the enemy when the game is running
 func _play_game():
 	self.show()
 #endregion 

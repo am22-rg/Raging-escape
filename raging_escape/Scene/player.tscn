@@ -1,6 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtsakxrrdy581"]
+[gd_scene load_steps=11 format=3 uid="uid://dtsakxrrdy581"]
 
 [ext_resource type="Script" uid="uid://dfegyj5qd4mv6" path="res://Script/player.gd" id="1_kelma"]
+[ext_resource type="Texture2D" uid="uid://xqdp3l34b5fc" path="res://Assets/Free 2D Prison Game Assets By Adarsh S/playeridle.png" id="2_58ae2"]
+[ext_resource type="Texture2D" uid="uid://c68hlqd7ieg3" path="res://Assets/Free 2D Prison Game Assets By Adarsh S/playerrun1.png" id="3_ivevv"]
+[ext_resource type="Texture2D" uid="uid://crs86mtvqd2v0" path="res://Assets/Free 2D Prison Game Assets By Adarsh S/playerrun2.png" id="4_r6jsd"]
 
 [sub_resource type="Curve" id="Curve_kelma"]
 _limits = [1.0, 3.0, 0.0, 1.0]
@@ -19,21 +22,46 @@ point_count = 4
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kelma"]
 size = Vector2(7.9558, 11.958)
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_p6qlh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_58ae2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ivevv")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ivevv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_r6jsd")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box", "player_animation")]
 scale = Vector2(0.882785, 0.880553)
 script = ExtResource("1_kelma")
 attack_box = NodePath("AttackBox")
-max_dashes = 1
+max_dashes = 2
+down_force = 1.4
 max_coyote_time = 0.17
 damage_curve = SubResource("Curve_kelma")
 speed_curve = SubResource("Curve_y8w33")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -11.0
-offset_top = -11.0
-offset_right = 11.0
-offset_bottom = 11.0
-metadata/_edit_use_anchors_ = true
+player_animation = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_y8w33")
@@ -54,6 +82,13 @@ shape = SubResource("RectangleShape2D_kelma")
 [node name="ConstantTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+process_mode = 1
+position = Vector2(0, -2.2713)
+scale = Vector2(0.0343266, 0.0343266)
+sprite_frames = SubResource("SpriteFrames_p6qlh")
+animation = &"jump"
 
 [connection signal="body_entered" from="AttackBox" to="." method="_on_attack_box_body_entered"]
 [connection signal="body_exited" from="AttackBox" to="." method="_on_attack_box_body_exited"]

@@ -25,18 +25,18 @@ func _game_paused():
 
 
 #region Buttons System
+# Emits a signal that the game is playing
 func _on_play_pressed() -> void:
-	# Emits a signal that the game is playing
-	print("emitted")
 	SignalManager.play_game.emit() 
 
 
+# Emits signal to go to menu
 func _on_menu_pressed() -> void:
-	# Emits signal to go to menu
+
 	SignalManager.to_menu.emit()
 
 
+# Emits signal to go to reset
 func _on_reset_pressed() -> void:
-	# Emits signal to go to reset
 	SignalManager.reset.emit()
 #endregion

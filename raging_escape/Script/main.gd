@@ -1,7 +1,5 @@
 extends Node2D
 
-var current_level: int = 0
-
 @export var max_health = 12
 
 #region UI & External Nodes Var System
@@ -26,10 +24,16 @@ var corruption_val: float = 0
 # Screen shake
 var noise := FastNoiseLite.new()
 var noise_time: float = 0.0
-var start_time = Time.get_ticks_msec()
 
 @export var shake_speed: float = 4
 @export var max_offset: Vector2 = Vector2(5, 3)
+#endregion
+
+#region Stopwatch Var System
+var start_time = Time.get_ticks_msec()
+
+var pause_time: int = 0
+var is_paused := false
 #endregion
 
 
@@ -76,14 +80,17 @@ func _process(delta):
 		# Otherwise no offset
 		camera.offset = Vector2.ZERO
 	
-	# Get the elapsed time
-	var elapsed_time = Time.get_ticks_msec() - start_time
-	
-	# Make and update all the values for the stopwatch
-	var mins = elapsed_time / 60000
-	var secs = (elapsed_time / 1000) % 60
-	var mili_secs = (elapsed_time % 1000) / 10
-	label.text = "%02d : %02d : %02d" % [mins, secs, mili_secs]
+	if not is_paused:
+		# Get the elapsed time
+		var elapsed_time = Time.get_ticks_msec() - start_time - pause_time
+		
+		# Make and update all the values for the stopwatch
+		var mins = elapsed_time / 60000
+		var secs = (elapsed_time / 1000) % 60
+		var mili_secs = (elapsed_time % 1000) / 10
+		label.text = "%02d : %02d : %02d" % [mins, secs, mili_secs]
+	else:
+		pause_time = Time.get_ticks_msec() - start_time
 #endregion
 
 
@@ -125,8 +132,7 @@ func _reset_level():
 	player.player_health = player.max_health
 	
 	# Get the current level and load it
-	current_level = menu_ui.level_select()
-	menu_ui.load_level_id(current_level)
+	menu_ui.load_level_id(SignalManager.current_level)
 
 
 # Reset the stopwatch to 0
@@ -140,6 +146,7 @@ func _reset_stopwatch():
 func _game_paused():
 	# Make sure that everything is in postion when the game isn't running
 	get_tree().paused = true
+	is_paused = true # For timer
 	
 	# Show the pause menu
 	pause_ui.show()
@@ -152,6 +159,7 @@ func _game_paused():
 func _game_running():
 	# Play the game so everything can move 
 	get_tree().paused = false
+	is_paused = false # For timer
 	
 	# Hide both main menu and pause menu
 	menu_ui.hide()

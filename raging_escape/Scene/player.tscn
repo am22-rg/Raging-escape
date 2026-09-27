@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dtsakxrrdy581"]
+[gd_scene load_steps=13 format=3 uid="uid://dtsakxrrdy581"]
 
 [ext_resource type="Script" uid="uid://dfegyj5qd4mv6" path="res://Script/player.gd" id="1_kelma"]
 [ext_resource type="Texture2D" uid="uid://xqdp3l34b5fc" path="res://Assets/Free 2D Prison Game Assets By Adarsh S/playeridle.png" id="2_58ae2"]
@@ -52,10 +52,20 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box", "player_animation")]
+[sub_resource type="Curve" id="Curve_58ae2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.227053, 0.672202), 0.0, 0.0, 0, 0, Vector2(0.47343, 0.677532), 0.0, 0.0, 0, 0, Vector2(0.997585, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_ivevv"]
+offsets = PackedFloat32Array(0.322222, 0.991667)
+colors = PackedColorArray(1, 1, 1, 1, 0.46, 0.3956, 0.3956, 1)
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("attack_box", "particles", "player_animation")]
+position = Vector2(0, -14)
 scale = Vector2(1.32191, 1.31857)
 script = ExtResource("1_kelma")
 attack_box = NodePath("AttackBox")
+particles = NodePath("CPUParticles2D")
 max_dashes = 2
 down_force = 1.4
 max_coyote_time = 0.17
@@ -74,7 +84,7 @@ shape = SubResource("RectangleShape2D_xa75v")
 [node name="AttackBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2(13.9634, 3.01246e-12)
+position = Vector2(13.6205, 1.19209e-07)
 rotation = -1.5708
 scale = Vector2(1.57435, -2.25201)
 shape = SubResource("RectangleShape2D_kelma")
@@ -85,10 +95,26 @@ autostart = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 process_mode = 1
-position = Vector2(0, -2.2713)
+position = Vector2(0, -2.27519)
 scale = Vector2(0.0343266, 0.0343266)
 sprite_frames = SubResource("SpriteFrames_p6qlh")
 animation = &"jump"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.1
+one_shot = true
+explosiveness = 0.7
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 250.0
+initial_velocity_max = 250.0
+scale_amount_min = 12.0
+scale_amount_max = 12.0
+scale_amount_curve = SubResource("Curve_58ae2")
+color = Color(0.72, 0.62952, 0.5328, 1)
+color_ramp = SubResource("Gradient_ivevv")
 
 [connection signal="body_entered" from="AttackBox" to="." method="_on_attack_box_body_entered"]
 [connection signal="body_exited" from="AttackBox" to="." method="_on_attack_box_body_exited"]

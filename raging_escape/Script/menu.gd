@@ -15,9 +15,13 @@ var level_dict = {
 }
 
 # Current level to check which scene is running
-var current_level: PackedScene = level_dict[1]
+var current_dict_level: PackedScene = level_dict[1]
 var level_node: Node = null
 var level: int = 1
+
+# level select related
+const LEVEL_SELECT_ERROR = 0.08
+var completed_levels: int = 0
 
 @export var level_label: Label
 @export var level_container: Node2D 
@@ -26,7 +30,11 @@ var level: int = 1
 # Show the menu at the start of the game
 func _ready():
 	self.show()
+	
 	tutorial_menu.hide()
+	
+	# Connect signals
+	SignalManager.level_complete.connect(_update_completed_levels)
 
 
 # Open the correct level
@@ -48,7 +56,7 @@ func load_level_id(id):
 		var scene_instance = level_dict[id].instantiate()
 		level_container.add_child(scene_instance)
 		level_node = scene_instance
-		current_level = level_dict[id]
+		current_dict_level = level_dict[id]
 		
 		# Make sure the player will spawn in the correct position
 		player.global_position = Vector2.ZERO
@@ -67,7 +75,7 @@ func level_select():
 	
 	# Find the current level number
 	for key in level_dict:
-		if level_dict[key] == current_level:
+		if level_dict[key] == current_dict_level:
 			level_number = key
 	
 	# Get rid of current scene
@@ -75,22 +83,36 @@ func level_select():
 		level_node.queue_free()
 	
 	# Send the current level to the game engine
-	return level_number
+	SignalManager.current_level = level_number
 #endregion
 
 
 # Buttons for selecting level using a counter
-#region Level Buttons
+#region Level System
 func neg_button_level():
 	if level > 1:
 		level -= 1
 		level_label.text = str(level)
+	else:
+		level_label.modulate = Color.DARK_RED
+		await get_tree().create_timer(LEVEL_SELECT_ERROR).timeout
+		level_label.modulate = Color.WHITE
 
 
 func pos_button_level():
-	if level < level_dict.size():
+	if level < level_dict.size() and level <= completed_levels:
 		level += 1
 		level_label.text = str(level)
+	else:
+		level_label.modulate = Color.DARK_RED
+		await get_tree().create_timer(LEVEL_SELECT_ERROR).timeout
+		level_label.modulate = Color.WHITE
+
+
+# If level hasnt been completed add 
+func _update_completed_levels(exited_level):
+	if exited_level > completed_levels:
+		completed_levels += 1
 #endregion
 
 

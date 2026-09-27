@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 #region Health & Damage Var System
 # Health
-const HEALTH_REGEN := 0.5
+const HEALTH_REGEN: float = 0.5
 var player_health: float = 0
 
 @export var max_health: int = 12
@@ -10,7 +10,8 @@ var player_health: float = 0
 # Damage
 var enemys_in_range := []
 
-@export var attack_box : Area2D
+@export var attack_box: Area2D
+@export var particles: CPUParticles2D
 #endregion
 
 #region Dash & Jump Var System
@@ -34,8 +35,7 @@ const CORRUPTION_RELEASE: float = 0.15
 #endregion
 
 #region Movement Var System
-# Handles rotation of the player
-const LEFT := -PI
+const LEFT := -PI # Handles player rotation
 const RIGHT := 0
 
 const SPEED = 200.0
@@ -43,7 +43,6 @@ const JUMP_VELOCITY = -500.0
 var current_speed: float = 250
 
 var previous_position: Vector2
-var distance_moved = global_position.distance_to(previous_position)
 #endregion
 
 #region Curves
@@ -120,9 +119,11 @@ func _physics_process(delta: float) -> void:
 	if velocity.x > 0:
 		attack_box.rotation = RIGHT
 		player_animation.flip_h = false
+		particles.rotation = RIGHT
 	elif velocity.x < 0:
 		attack_box.rotation = LEFT
 		player_animation.flip_h = true
+		particles.rotation = LEFT
 	
 	_player_animation()
 	move_and_slide()
@@ -132,22 +133,16 @@ func _process(_delta: float) -> void:
 	# If the mouse is clicked try to attack
 	if Input.is_action_just_pressed("Attack"):
 		damage_multiplier()
+		
+		# Emit attack animation
+		particles.emitting = true
 	
 	if Input.is_action_just_pressed("Release"):
 		SignalManager.corruption_sig.emit(corruption_val - CORRUPTION_RELEASE)
 #endregion
 
 
-func _player_animation():
-	print(distance_moved)
-	if distance_moved > 0 and is_on_floor():
-		player_animation.play("run")
-	elif not is_on_floor():
-		player_animation.play("jump")
-	else:
-		player_animation.play("idle")
-
-
+#region Update System
 func _on_const_timer_timeout():
 	SignalManager.corruption_sig.emit(corruption_val - CORRUPTION_EQUALISER)
 	update_health(HEALTH_REGEN)
@@ -183,6 +178,7 @@ func update_health(change):
 		SignalManager.corruption_sig.emit(0)
 		
 		player_health = max_health
+#endregion
 
 
 #region Attack System
@@ -222,3 +218,19 @@ func _play_game():
 	# Set the velocity to zero
 	velocity = Vector2.ZERO
  #endregion
+
+
+func _player_animation():
+	# Get the distance betwen the prevois frame and the current
+	var distance_moved = global_position.distance_to(previous_position)
+	
+	# Check conditions and play the correct animation 
+	if distance_moved > 0 and is_on_floor():
+		player_animation.play("run")
+	elif not is_on_floor():
+		player_animation.play("jump")
+	else:
+		player_animation.play("idle")
+	
+	# Update the previous position for the next calculation 
+	previous_position = global_position

@@ -20,7 +20,7 @@ SignalManager="*res://Script/signal_manager.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg")
+enabled=PackedStringArray()
 
 [global_group]
 

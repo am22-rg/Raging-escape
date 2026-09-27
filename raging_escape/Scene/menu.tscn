@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://db8xts6uww2qg"]
+[gd_scene load_steps=5 format=3 uid="uid://db8xts6uww2qg"]
 
 [ext_resource type="Script" uid="uid://ujnksgvjg4ly" path="res://Script/menu.gd" id="1_0ve60"]
 [ext_resource type="Texture2D" uid="uid://bvrysobqqtxaj" path="res://Assets/Screenshot_2026-06-19_at_10.32.29_AM-removebg-preview.png" id="2_20xco"]
+[ext_resource type="Texture2D" uid="uid://5rphmet7clgy" path="res://Assets/main menu prison escape.png" id="4_alu6o"]
 [ext_resource type="FontFile" uid="uid://d2ru7amkj4na" path="res://Assets/Black_Ops_One/BlackOpsOne-Regular.ttf" id="4_m6dxm"]
 
 [node name="Menu" type="Control" node_paths=PackedStringArray("tutorial_menu", "level_label")]
@@ -21,14 +22,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -12.0281
-offset_top = -17.1652
-offset_right = 11.9719
-offset_bottom = -10.1652
+offset_left = -20.0
+offset_top = -19.0
+offset_right = 20.0
+offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("4_m6dxm")
-theme_override_font_sizes/font_size = 3
+theme_override_font_sizes/font_size = 5
 text = "Raging Escape"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -36,10 +37,10 @@ vertical_alignment = 1
 [node name="PlayButton" type="Button" parent="."]
 process_mode = 3
 layout_mode = 0
-offset_left = 25.4085
-offset_top = 11.3583
-offset_right = 70.4085
-offset_bottom = 42.3583
+offset_left = 26.0
+offset_top = 12.0
+offset_right = 71.0
+offset_bottom = 43.0
 scale = Vector2(0.298168, 0.266505)
 theme_override_fonts/font = ExtResource("4_m6dxm")
 text = "Play"
@@ -107,33 +108,8 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="."]
-z_index = -6
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(0.4, 0.4, 0.4, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="."]
-z_index = -1
-layout_mode = 0
-offset_top = 14.0
-offset_right = 24.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(0.726732, 0.726732, 0.726732, 1)
-
-[node name="ColorRect3" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 8.69978
-offset_top = 26.6844
-offset_right = 12.6998
-offset_bottom = 39.6844
-mouse_filter = 2
-color = Color(0.169245, 0.169245, 0.169245, 1)
-
 [node name="TutorialMenu" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -215,6 +191,12 @@ escape the prison as fast
 as possible to gain your 
 freedom...
 "
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(19.9991, 20.0903)
+scale = Vector2(0.249555, 0.443713)
+texture = ExtResource("4_alu6o")
 
 [connection signal="pressed" from="PlayButton" to="." method="play_button_pressed"]
 [connection signal="button_down" from="TutorialButton" to="." method="_on_tutorial_button_down"]

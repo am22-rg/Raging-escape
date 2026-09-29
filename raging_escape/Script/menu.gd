@@ -21,7 +21,7 @@ var level: int = 1
 
 # level select related
 const LEVEL_SELECT_ERROR = 0.08
-var completed_levels: int = 0
+var completed_levels: int = 1
 
 @export var level_label: Label
 @export var level_container: Node2D 
@@ -100,7 +100,7 @@ func neg_button_level():
 
 
 func pos_button_level():
-	if level < level_dict.size() and level <= completed_levels:
+	if level < level_dict.size() and level <= completed_levels :
 		level += 1
 		level_label.text = str(level)
 	else:
@@ -113,6 +113,7 @@ func pos_button_level():
 func _update_completed_levels(exited_level):
 	if exited_level > completed_levels:
 		completed_levels += 1
+		pos_button_level()
 #endregion
 
 

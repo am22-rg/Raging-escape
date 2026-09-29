@@ -20,7 +20,7 @@ var enemy_health: int
 var can_attack: bool = true
 var in_range: bool = false
 
-@export var damage: int = 1
+@export var enemy_damage: int = -6
 @export var attack_area: Area2D
 @export var timer_attack: Timer
 #endregion
@@ -154,7 +154,7 @@ func _on_attack_area_exited(area):
 # Attacks player
 func _attack():
 	# Update the players health
-	player.update_health(damage)
+	player.update_health(enemy_damage)
 	
 	# sets a timer for when the enemy can attack again
 	can_attack = false

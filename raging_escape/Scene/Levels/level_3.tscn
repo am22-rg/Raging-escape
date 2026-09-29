@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://jt5vchru0ci4"]
+[gd_scene load_steps=11 format=4 uid="uid://jt5vchru0ci4"]
 
 [ext_resource type="Texture2D" uid="uid://di7rbm7jgqkoe" path="res://Assets/Saver_Tile.png" id="1_5pqjk"]
 [ext_resource type="PackedScene" uid="uid://cmi3djn78cg88" path="res://Scene/exit_door.tscn" id="2_17ilc"]
 [ext_resource type="Texture2D" uid="uid://dohndhp5238kk" path="res://Assets/rage tileset 1.png" id="3_vf5vf"]
 [ext_resource type="Texture2D" uid="uid://bbgvbsllxdoqa" path="res://Assets/80px_Gemini_Generated_Image_fhnl98fhnl98fhnl.jpeg" id="4_hv3rh"]
 [ext_resource type="FontFile" uid="uid://d2ru7amkj4na" path="res://Assets/Black_Ops_One/BlackOpsOne-Regular.ttf" id="5_hv3rh"]
+[ext_resource type="PackedScene" uid="uid://dwybc5eaknq23" path="res://Scene/kill_zone.tscn" id="6_7tqhq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7tqhq"]
 texture = ExtResource("1_5pqjk")
@@ -101,3 +102,6 @@ offset_bottom = -52.6875
 theme_override_fonts/font = ExtResource("5_hv3rh")
 theme_override_font_sizes/font_size = 27
 text = "YOU WON!"
+
+[node name="KillZone" parent="." instance=ExtResource("6_7tqhq")]
+position = Vector2(-1, 233)

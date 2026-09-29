@@ -1,12 +1,13 @@
 extends Area2D
 
-const WAIT_TO_EXIT: float = 0.5
+const WAIT_TO_PAUSE: float = 0.1
+const WAIT_TO_EXIT: float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide()
 	
-	SignalManager.pause_game.connect(_game_paused)
+	#SignalManager.pause_game.connect(_game_paused)
 	SignalManager.play_game.connect(_game_running)
 
 
@@ -14,6 +15,7 @@ func _ready() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player"):
 		# Pause game and wait so the player knows they reached the end
+		await get_tree().create_timer(WAIT_TO_PAUSE).timeout
 		get_tree().paused = true
 		await get_tree().create_timer(WAIT_TO_EXIT).timeout
 		

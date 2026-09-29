@@ -22,6 +22,7 @@ var dashes: int = max_dashes
 @export var max_dashes: int 
 
 # Jump
+const JUMP_VELOCITY = -400.0
 var coyote_time: float = 0.0
 
 @export var down_force: float
@@ -39,7 +40,7 @@ const LEFT := -PI # Handles player rotation
 const RIGHT := 0
 
 const SPEED = 200.0
-const JUMP_VELOCITY = -500.0
+
 var current_speed: float = 250
 
 var previous_position: Vector2
@@ -174,7 +175,7 @@ func update_health(change):
 		
 		health_bar_ui.value = player_health
 	else:
-		SignalManager.to_menu.emit()
+		SignalManager.reset.emit()
 		SignalManager.corruption_sig.emit(0)
 		
 		player_health = max_health

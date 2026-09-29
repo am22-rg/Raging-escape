@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d34a2va2xf8ux"]
+[gd_scene load_steps=14 format=3 uid="uid://d34a2va2xf8ux"]
 
 [ext_resource type="Script" uid="uid://doenp6i411ykb" path="res://Script/main.gd" id="1_2wwxx"]
 [ext_resource type="PackedScene" uid="uid://dtsakxrrdy581" path="res://Scene/player.tscn" id="1_f6udf"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://6gc3w35g5y3c" path="res://Script/game_ui.gd" id="4_2wwxx"]
 [ext_resource type="FontFile" uid="uid://d2ru7amkj4na" path="res://Assets/Black_Ops_One/BlackOpsOne-Regular.ttf" id="5_3amdw"]
 [ext_resource type="PackedScene" uid="uid://bylhrvge2532a" path="res://Scene/pause_menu.tscn" id="6_1xcnr"]
-[ext_resource type="PackedScene" uid="uid://dwybc5eaknq23" path="res://Scene/kill_zone.tscn" id="7_ow1sv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sblpm"]
 bg_color = Color(0.168627, 0.0705882, 0.0784314, 1)
@@ -19,6 +18,19 @@ bg_color = Color(0.168627, 0.0705882, 0.0784314, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ow1sv"]
 bg_color = Color(0.258824, 0.615686, 0.133333, 1)
+
+[sub_resource type="Curve" id="Curve_ow1sv"]
+_limits = [-360.0, 1024.0, 0.0, 1.0]
+_data = [Vector2(0, 1024), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_75buv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.717391, 0.536285), -0.967826, -0.967826, 0, 0, Vector2(0.997585, 0.0885609), -2.51695, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_c2iwn"]
+offsets = PackedFloat32Array(0, 0.305556, 0.9, 1)
+colors = PackedColorArray(0.68, 0.306, 0.306, 1, 1, 1, 1, 1, 0.53908, 0.406549, 0.494903, 1, 0.31, 0.1116, 0.243867, 1)
 
 [node name="Levels" type="Node2D" node_paths=PackedStringArray("camera", "player", "label", "menu_ui", "pause_ui", "game_ui")]
 script = ExtResource("1_2wwxx")
@@ -35,7 +47,7 @@ max_offset = Vector2(2.5, 1.5)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -14)
 scale = Vector2(1.32191, 1.31857)
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 
@@ -55,6 +67,7 @@ offset_right = 45.0
 offset_bottom = 43.0
 player = NodePath("../../Player")
 level_container = NodePath("../../Level Container")
+metadata/_edit_use_anchors_ = true
 
 [node name="GameUI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -63,6 +76,7 @@ offset_right = 1153.0
 offset_bottom = 650.0
 mouse_filter = 2
 script = ExtResource("4_2wwxx")
+metadata/_edit_use_anchors_ = true
 
 [node name="Health" type="ProgressBar" parent="CanvasLayer/GameUI"]
 layout_mode = 1
@@ -81,6 +95,7 @@ step = 1.0
 value = 12.0
 fill_mode = 1
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="Corruption" type="ProgressBar" parent="CanvasLayer/GameUI"]
 layout_mode = 1
@@ -93,6 +108,24 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ow1sv")
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="CanvasLayer/GameUI/Corruption"]
+visible = false
+position = Vector2(-104, -56)
+rotation = -2.33167
+direction = Vector2(1, 1)
+spread = 60.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+angular_velocity_max = 720.0
+angular_velocity_curve = SubResource("Curve_ow1sv")
+scale_amount_min = 15.0
+scale_amount_max = 20.0
+scale_amount_curve = SubResource("Curve_75buv")
+color = Color(0.94827, 0.35225, 5.77569e-07, 0.960784)
+color_ramp = SubResource("Gradient_c2iwn")
 
 [node name="Label" type="Label" parent="CanvasLayer/GameUI"]
 layout_mode = 1
@@ -108,6 +141,7 @@ theme_override_fonts/font = ExtResource("5_3amdw")
 theme_override_font_sizes/font_size = 30
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Pause" type="Button" parent="CanvasLayer/GameUI"]
 layout_mode = 1
@@ -120,19 +154,17 @@ offset_right = -17.0
 offset_bottom = 48.0
 grow_horizontal = 0
 text = "pause"
+metadata/_edit_use_anchors_ = true
 
 [node name="PauseMenu" parent="CanvasLayer" node_paths=PackedStringArray("menu_ui") instance=ExtResource("6_1xcnr")]
 menu_ui = NodePath("../Menu")
+metadata/_edit_use_anchors_ = true
 
 [node name="Level Container" type="Node2D" parent="."]
 process_mode = 3
 
 [node name="LevelTimer" type="Timer" parent="."]
 process_callback = 0
-
-[node name="KillZone" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_ow1sv")]
-position = Vector2(-1, 652)
-player = NodePath("../Player")
 
 [connection signal="pressed" from="CanvasLayer/GameUI/Pause" to="CanvasLayer/GameUI" method="_on_pause_pressed"]
 [connection signal="timeout" from="LevelTimer" to="." method="_on_level_timer_timeout"]

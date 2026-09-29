@@ -50,7 +50,6 @@ scale = Vector2(0.880124, 0.883093)
 script = ExtResource("1_0i62g")
 move_range = NodePath("MoveRange")
 max_health = 3
-damage = -1
 attack_area = NodePath("AttackArea")
 timer_attack = NodePath("AttackTimer")
 enemy_animation = NodePath("AnimatedSprite2D")

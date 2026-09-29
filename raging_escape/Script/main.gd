@@ -132,6 +132,7 @@ func _reset_level():
 	player.player_health = player.max_health
 	
 	# Get the current level and load it
+	menu_ui.level_select()
 	menu_ui.load_level_id(SignalManager.current_level)
 
 

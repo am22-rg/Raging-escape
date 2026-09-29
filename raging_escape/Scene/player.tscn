@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dtsakxrrdy581"]
+[gd_scene load_steps=14 format=3 uid="uid://dtsakxrrdy581"]
 
 [ext_resource type="Script" uid="uid://dfegyj5qd4mv6" path="res://Script/player.gd" id="1_kelma"]
 [ext_resource type="Texture2D" uid="uid://xqdp3l34b5fc" path="res://Assets/Free 2D Prison Game Assets By Adarsh S/playeridle.png" id="2_58ae2"]
 [ext_resource type="Texture2D" uid="uid://c68hlqd7ieg3" path="res://Assets/Free 2D Prison Game Assets By Adarsh S/playerrun1.png" id="3_ivevv"]
 [ext_resource type="Texture2D" uid="uid://crs86mtvqd2v0" path="res://Assets/Free 2D Prison Game Assets By Adarsh S/playerrun2.png" id="4_r6jsd"]
+[ext_resource type="PackedScene" uid="uid://cmi3djn78cg88" path="res://Scene/exit_door.tscn" id="5_ivevv"]
 
 [sub_resource type="Curve" id="Curve_kelma"]
 _limits = [1.0, 3.0, 0.0, 1.0]
@@ -16,11 +17,12 @@ _data = [Vector2(0, 1.00119), 0.0, 1.15751, 0, 0, Vector2(1e-05, 1.00119), 0.0, 
 point_count = 4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y8w33"]
+size = Vector2(16.0518, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xa75v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kelma"]
-size = Vector2(7.9558, 11.958)
+size = Vector2(7.9558, 13.3674)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p6qlh"]
 animations = [{
@@ -74,6 +76,7 @@ speed_curve = SubResource("Curve_y8w33")
 player_animation = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.295368, 0)
 shape = SubResource("RectangleShape2D_y8w33")
 
 [node name="HurtBox" type="Area2D" parent="." groups=["player"]]
@@ -84,7 +87,7 @@ shape = SubResource("RectangleShape2D_xa75v")
 [node name="AttackBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2(13.6205, 1.19209e-07)
+position = Vector2(15.2075, -2.86102e-06)
 rotation = -1.5708
 scale = Vector2(1.57435, -2.25201)
 shape = SubResource("RectangleShape2D_kelma")
@@ -98,7 +101,7 @@ process_mode = 1
 position = Vector2(0, -2.27519)
 scale = Vector2(0.0343266, 0.0343266)
 sprite_frames = SubResource("SpriteFrames_p6qlh")
-animation = &"jump"
+animation = &"idle"
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 emitting = false
@@ -115,6 +118,9 @@ scale_amount_max = 12.0
 scale_amount_curve = SubResource("Curve_58ae2")
 color = Color(0.72, 0.62952, 0.5328, 1)
 color_ramp = SubResource("Gradient_ivevv")
+
+[node name="ExitDoor2" parent="." instance=ExtResource("5_ivevv")]
+position = Vector2(-1206.67, 136.993)
 
 [connection signal="body_entered" from="AttackBox" to="." method="_on_attack_box_body_entered"]
 [connection signal="body_exited" from="AttackBox" to="." method="_on_attack_box_body_exited"]
